@@ -1,0 +1,144 @@
+body {
+    background-color: #eeeeee;
+}
+
+.error-msg {
+    font-size: 18px;
+    font-weight: bold;
+    color: darkred;
+    padding-top: 3px;
+}
+
+.tag {
+    margin-left: 5px;
+    float: right;
+    padding-right: 10px;
+    width: 55px;
+    height: 25px;
+    border: 1px solid white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.tag-video {
+    color: white;
+    background-color: #de1a02;
+}
+
+.tag-text {
+    color: white;
+    background-color: #231f20;
+}
+
+.tag-audio {
+    color: white;
+    background-color: #997f00;
+}
+
+.tag-photo {
+    color: white;
+    background-color: #014f95;
+}
+
+.event-btn {
+    padding-top: 10px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border: 0;
+    border-top: 1px solid #dddddd;
+    width: 100%;
+    text-align: left;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+.event-btn:hover {
+    border: 0;
+    background-color: #f3f3f3;
+}
+
+.custom-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.custom-row {
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100%;
+}
+
+.main {
+    /*background-color: #dddddd;*/
+    background: linear-gradient(#9cbad6, white);
+    padding-left: 0;
+    padding-right: 0;
+    position: absolute;
+    left: 250px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidebar {
+    background-color: #014f95;
+    position: absolute;
+    left: 0;
+    width: 250px;
+    top: 0;
+    bottom: 0;
+}
+
+.main-jumbotron {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: #eeeeee;
+    border: 2px solid #0063b3;
+}
+.btn-sidebar {
+    width: 250px;
+    text-align: left;
+    background-color: inherit;
+    color: white;
+    margin-top: 20px;
+}
+.btn-sidebar:hover {
+    color: white;
+    background-color: #0063b3;
+}
+.sidebar-logo {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    width: 250px;
+    height: 75px;
+}
+
+.jumbo-info {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.event-content {
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #dddddd;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.event-title {
+    padding-left: 10px !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.daily-event-title {
+    margin-left: 10px;
+    font-size: 26px;
+    text-decoration: underline;
+}

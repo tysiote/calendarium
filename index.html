@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="calendarium">
+    <meta name="author" content="martinusmaco">
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/moment.min.js"></script>
+    <script src="bootstrap/js/transition.js"></script>
+    <script src="bootstrap/js/collapse.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
+    <script src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <!--<script src="bootstrap/js/index.js"></script>-->
+    <!--<script src="bootstrap/js/jquery.mobile-1.4.5.min.js"></script>-->
+    <!--<script src="bootstrap/js/jquery.ui.datepicker.js"></script>-->
+    <!--<script id="mobile-datepicker" src="bootstrap/js/jquery.mobile.datepicker.js"></script>-->
+    <script src="res/objects.js"></script>
+    <script src="res/networking.js"></script>
+    <script src="res/starter.js"></script>
+    <script src="res/parser.js"></script>
+    <script src="res/utilities.js"></script>
+    <script src="res/sk.js"></script>
+    <script src="res/builder.js"></script>
+    <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile-1.4.5.min.css">-->
+    <!--<link rel="stylesheet" href="bootstrap/css/jqm-demos.css">-->
+    <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
+    <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile.datepicker.css">-->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="res/calendarium.css" rel="stylesheet">
+    <title>TASR Calendarium</title>
+</head>
+<body>
+        <div id="add-new-event" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New event</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="input-title">Názov udalosti</label>
+                                <input type="text" class="form-control" id="input-title" placeholder="Zadajte názov">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-content">Popis</label>
+                                <textarea class="form-control" rows="5" id="input-content" placeholder="Zadajte popis"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="input-checkboxes">Tagy</label>
+                                <div class="form-group" id="input-checkboxes">
+                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-text">Text</label>
+                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-video">Video</label>
+                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-audio">Zvuk</label>
+                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-photo">Foto</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" id="input-date" placeholder="Použite ikonu napravo" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    <script type="text/javascript">$(function () {$('#datetimepicker1').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
+                                </div>
+                            </div>
+                            <p class="error-msg" id="input-new-error"></p>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="addEventClicked();">Add event</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="screen">
+            <div id="sidebar" class="sidebar">
+                <img src="assets/logo.png" class="sidebar-logo"/>
+                <div id="main-datepicker" style="background-color: white;"></div>
+                <button type="button" class="btn btn-lg btn-sidebar" data-toggle="modal" data-target="#add-new-event">Nová udalosť</button>
+                <button type="button" style="visibility: hidden;" onClick="mainDateChanged()" value="" id="test"></button>
+            </div>
+            <div class="main">
+                <div class="jumbotron main-jumbotron" id="main-jumbotron"></div>
+            </div>
+        </div>
+    <script>$(document).ready(function() {startPage();});</script>
+</body>
+</html>

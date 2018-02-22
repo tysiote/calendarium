@@ -33,7 +33,7 @@ function populateOneEvent(e) {
         '<button data-toggle="collapse" data-target="#cal-row-div-' + e.id + '" class="event-btn">' +
             '<div class="row custom-row" id="cal-row-' + e.id + '">' +
                 '<div class="col-lg-9 col-md-6 col-sm-9 custom-col"><div class="event-title">[' + e.htmlStartTime() + '] ' + e.title + '</div></div>' +
-                '<div class="col-lg-3 col-md-6 col-sm-3 custom-col">' + e.htmlTags() + '</div>' +
+                '<div class="col-lg-3 col-md-6 col-sm-3 custom-col">' + e.htmlTags2() + '</div>' +
             '</div>' +
         '</button>' +
         '<div id="cal-row-div-' + e.id + '" class="collapse"><div class="event-content">' + e.content + '</div></div>';

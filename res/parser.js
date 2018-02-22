@@ -61,6 +61,7 @@ function parseDate(input, type) {
 }
 
 function parsePostData(obj) {
+    console.log(obj);
     let result = "";
     for (let key in obj) result += key + "=" + obj[key].toString() + "&";
     return result.substring(0, result.length - 1);

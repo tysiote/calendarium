@@ -27,23 +27,34 @@ function addEventClicked() {
     let title = $("#input-title").val();
     let content = $("#input-content").val();
     let date = $("#input-date").val();
-    let tags = {
-        text: $("#input-checkbox-text").is(":checked"),
+    let tags1 = {
+        home: $("#input-checkbox-home").is(":checked"),
+        abroad: $("#input-checkbox-abroad").is(":checked"),
+        economic: $("#input-checkbox-economic").is(":checked"),
+        sport: $("#input-checkbox-sport").is(":checked"),
+        photo: $("#input-checkbox-photo").is(":checked"),
         video: $("#input-checkbox-video").is(":checked"),
-        audio: $("#input-checkbox-audio").is(":checked"),
+    };
+    let tags2 = {
+        text: $("#input-checkbox-tag-text").is(":checked"),
+        video: $("#input-checkbox-tag-video").is(":checked"),
+        audio: $("#input-checkbox-tag-audio").is(":checked"),
+        photo: $("#input-checkbox-tag-photo").is(":checked"),
     };
     let temp = {};
     let error = "";
-    if (!title.length) error = "Please fill title";
-    if (!date.length) error = "Please pick correct date-time";
+    if (!title.length) error = "Prosím vyplňte názov";
+    if (!date.length) error = "Prosím zvoľte správny dátum a čas";
     if (!error.length) {
         temp = {
             title: title,
             content: content,
         };
         let temp_tags = "";
-        for (let key in tags) if (tags[key]) temp_tags += key + "|";
-        temp.tags = temp_tags.substring(0, temp_tags.length - 1);
+        for (let key in tags2) if (tags2[key]) temp_tags += key + "|";
+        temp.tags2 = temp_tags.substring(0, temp_tags.length - 1);
+        for (let key in tags1) if (tags1[key]) temp_tags += key + "|";
+        temp.tags1 = temp_tags.substring(0, temp_tags.length - 1);
         let temp_date = {};
         temp_date.year = parseInt(date.split(" ")[3]);
         temp_date.month = parseMonth(date.split(" ")[2]);
@@ -56,6 +67,4 @@ function addEventClicked() {
     } else {
         $err.html(error);
     }
-    // console.log(error, temp);
-    // console.log(title, content, date, duration, tags);
 }

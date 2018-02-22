@@ -41,8 +41,10 @@ class Event {
     constructor(data) {
         this.title = data.title;
         this.id = data.id;
-        this.content = data.content;
-        this.tags = data.tags;
+        this.content = data.content.replace(/\\r\\n/g, "<br>");
+        this.content = this.content.replace(/\\n/g, "<br>");
+        this.tags1 = data.tags1;
+        this.tags2 = data.tags2;
         this.start_time = data.start_time;
     }
 
@@ -50,7 +52,8 @@ class Event {
         let result = {
             title: this.title,
             content: this.content,
-            tags: this.tags,
+            tags1: this.tags1,
+            tags2: this.tags2,
             start_time: parseDate(this.start_time, "encode")
         };
         if (!exporting_new) result.id = this.id;
@@ -62,10 +65,22 @@ class Event {
         return this.start_time.hour + ":" + this.start_time.minute;
     }
 
-    htmlTags() {
+    htmlTags1() {
         let result = '';
-        if (this.tags && this.tags.length) {
-            let temp = this.tags.split("|");
+        if (this.tags1 && this.tags1.length) {
+            let temp = this.tags1.split("|");
+            temp.forEach(function(t) {
+                t = t.toLowerCase();
+                result += '<span class="tag tag-' + t + '">' + translateTag(t) + '</span> ';
+            });
+        }
+        return result;
+    }
+
+    htmlTags2() {
+        let result = '';
+        if (this.tags2 && this.tags2.length) {
+            let temp = this.tags2.split("|");
             temp.forEach(function(t) {
                 t = t.toLowerCase();
                 result += '<span class="tag tag-' + t + '">' + translateTag(t) + '</span> ';

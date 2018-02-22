@@ -29,6 +29,8 @@
     <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile.datepicker.css">-->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="res/checkboxes.css" rel="stylesheet">
     <link href="res/calendarium.css" rel="stylesheet">
     <title>TASR Calendarium</title>
 </head>
@@ -50,13 +52,30 @@
                                 <label for="input-content">Popis</label>
                                 <textarea class="form-control" rows="5" id="input-content" placeholder="Zadajte popis"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="input-checkboxes">Tagy</label>
-                                <div class="form-group" id="input-checkboxes">
-                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-text">Text</label>
-                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-video">Video</label>
-                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-audio">Zvuk</label>
-                                    <label class="checkbox-inline"><input type="checkbox" value="" id="input-checkbox-photo">Foto</label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="input-checkboxes">Členenie</label>
+                                        <div class="form-group" id="input-checkboxes">
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-home"><label for="input-checkbox-home" class="checkbox-inline">Domáce</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-abroad"><label for="input-checkbox-abroad" class="checkbox-inline">Zahraničné</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-economic"><label for="input-checkbox-economic" class="checkbox-inline">Ekonomické</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-sport"><label for="input-checkbox-sport" class="checkbox-inline">Športové</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-photo"><label for="input-checkbox-photo" class="checkbox-inline">Foto</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-video"><label for="input-checkbox-video" class="checkbox-inline">Video</label></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="input-checkboxes">Spôsoby</label>
+                                        <div class="form-group" id="input-checkboxes2">
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-text"><label for="input-checkbox-tag-text" class="checkbox-inline">Text</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-video"><label for="input-checkbox-tag-video" class="checkbox-inline">Video</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-audio"><label for="input-checkbox-tag-audio" class="checkbox-inline">Zvuk</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-photo"><label for="input-checkbox-tag-photo" class="checkbox-inline">Foto</label></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

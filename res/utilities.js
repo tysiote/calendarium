@@ -51,10 +51,11 @@ function addEventClicked() {
             content: content,
         };
         let temp_tags = "";
-        for (let key in tags2) if (tags2[key]) temp_tags += key + "|";
-        temp.tags2 = temp_tags.substring(0, temp_tags.length - 1);
         for (let key in tags1) if (tags1[key]) temp_tags += key + "|";
         temp.tags1 = temp_tags.substring(0, temp_tags.length - 1);
+        temp_tags = "";
+        for (let key in tags2) if (tags2[key]) temp_tags += key + "|";
+        temp.tags2 = temp_tags.substring(0, temp_tags.length - 1);
         let temp_date = {};
         temp_date.year = parseInt(date.split(" ")[3]);
         temp_date.month = parseMonth(date.split(" ")[2]);

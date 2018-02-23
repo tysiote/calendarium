@@ -1,43 +1,9 @@
 function parseResponse(res) {
-    let result = [];
-    res = res.replace("}", "").replace("[", "").replace("]", "");
-    res.split("{").forEach(function(t) {
-        if (t.length) {
-            let res_obj = {};
-            t = t.substring(0, t.length - 1).replace(/",/g, "~");
-            t.split("~").forEach(function(t2) {
-                t2 = t2.substring(1, t2.length);
-                let temp = '';
-                let t3 = '';
-                for (let i = 0; i < t2.length; i++) {
-                    if (t2[i] === '"') {
-                        if (t3.length === 2) {
-                            t3 = "";
-                            temp += "~";
-                        }
-                        else {
-                            if (t3.length === 0) {
-                                t3 = '"';
-                            }
-                        }
-                    } else if (t2[i] === ":") {
-                        if (t3.length === 1) t3 += ":";
-                        else {
-                            temp += t3 + t2[i];
-                            t3 = '';
-                        }
-                    } else {
-                        temp += t3 + t2[i];
-                        t3 = '';
-                    }
-                }
-                let t4 = temp.split("~");
-                res_obj[t4[0]] = t4[1];
-            });
-            if (res_obj['id']) res_obj['id'] = parseInt(res_obj['id']);
-            if (res_obj['start_time']) res_obj['start_time'] = parseDate(res_obj['start_time'], "decode");
-            result.push(res_obj);
-        }
+    let result = JSON.parse(res);
+    console.log(result);
+    result.forEach(function(e) {
+        e.start_time = parseDate(e.start_time, "decode");
+        e.id = parseInt(e.id);
     });
     return result;
 }

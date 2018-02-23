@@ -41,7 +41,8 @@ class Event {
     constructor(data) {
         this.title = data.title;
         this.id = data.id;
-        this.content = data.content.replace(/\\r\\n/g, "<br>");
+        this.content = data.content;
+        this.content = this.content.replace(/\\r\\n/g, "<br>");
         this.content = this.content.replace(/\\n/g, "<br>");
         this.tags1 = data.tags1;
         this.tags2 = data.tags2;

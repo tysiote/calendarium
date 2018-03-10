@@ -4,6 +4,7 @@ function drawMain() {
 
 function mainDateChanged(e) {
     if (e && e.length) {
+        last_date = e;
         let m = e.split(" ")[1];
         let d = e.split(" ")[2];
         let y = e.split(" ")[3];
@@ -17,6 +18,8 @@ function loadSelectedDates(d, m, y, wd) {
     let result = '';
     let daily_events = events.filterDay(d, m, y);
     result = '<h3 class="daily-event-title">Udalosti z dňa ' + translateWeekDay(parseWeekDay(wd)) + ', ' + d + '.' + m + '. ' + y + '</h3>';
+    if (exporting) result += '<button type="button" class="btn btn-primary export-button" id="export-button" onclick="exportPressed();">Exportujem</button>';
+    else result += '<button type="button" class="btn btn-primary export-button" id="export-button" onclick="exportPressed();">Export</button>';
     if (daily_events && daily_events.length) {
         daily_events.forEach(function(e) {
             result += populateOneEvent(e);
@@ -28,6 +31,9 @@ function loadSelectedDates(d, m, y, wd) {
 }
 
 function populateOneEvent(e) {
+    if (exporting) {
+        console.log("EXPORTING");
+    }
     let result = '';
     result += '' +
         '<button data-toggle="collapse" data-target="#cal-row-div-' + e.id + '" class="event-btn">' +

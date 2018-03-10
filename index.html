@@ -23,6 +23,7 @@
     <script src="res/utilities.js"></script>
     <script src="res/sk.js"></script>
     <script src="res/builder.js"></script>
+    <script src="res/exporter.js"></script>
     <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile-1.4.5.min.css">-->
     <!--<link rel="stylesheet" href="bootstrap/css/jqm-demos.css">-->
     <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
@@ -53,20 +54,36 @@
                                 <textarea class="form-control" rows="5" id="input-content" placeholder="Zadajte popis"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                <div class="col-md-4 col-sm-4 col-lg-4">
                                     <div class="form-group">
                                         <label for="input-checkboxes">Členenie</label>
                                         <div class="form-group" id="input-checkboxes">
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-home"><label for="input-checkbox-home" class="checkbox-inline">Domáce</label></div>
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-abroad"><label for="input-checkbox-abroad" class="checkbox-inline">Zahraničné</label></div>
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-economic"><label for="input-checkbox-economic" class="checkbox-inline">Ekonomické</label></div>
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-sport"><label for="input-checkbox-sport" class="checkbox-inline">Športové</label></div>
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-photo"><label for="input-checkbox-photo" class="checkbox-inline">Foto</label></div>
-                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-video"><label for="input-checkbox-video" class="checkbox-inline">Video</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-politics"><label for="input-checkbox-politics" class="checkbox-inline">Politika</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-justice"><label for="input-checkbox-justice" class="checkbox-inline">Justícia</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-economic"><label for="input-checkbox-economic" class="checkbox-inline">Ekonomika</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-sport"><label for="input-checkbox-sport" class="checkbox-inline">Šport</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-culture"><label for="input-checkbox-culture" class="checkbox-inline">Kultúra</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-local"><label for="input-checkbox-local" class="checkbox-inline">Samospráva</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-anniversary"><label for="input-checkbox-anniversary" class="checkbox-inline">Výročie</label></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-lg-6">
+                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label for="input-checkboxes">Kraje</label>
+                                        <div class="form-group" id="input-checkboxes3">
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-ba"><label for="input-checkbox-area-ba" class="checkbox-inline">Bratislavský kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-tt"><label for="input-checkbox-area-tt" class="checkbox-inline">Trnavský kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-tn"><label for="input-checkbox-area-tn" class="checkbox-inline">Trenčiansky kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-nr"><label for="input-checkbox-area-nr" class="checkbox-inline">Nitriansky kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-bb"><label for="input-checkbox-area-bb" class="checkbox-inline">Banskobystrický kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-za"><label for="input-checkbox-area-za" class="checkbox-inline">Žilinský kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-po"><label for="input-checkbox-area-po" class="checkbox-inline">Prešovský kraj</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-ke"><label for="input-checkbox-area-ke" class="checkbox-inline">Košický kraj</label></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-lg-4">
                                     <div class="form-group">
                                         <label for="input-checkboxes">Spôsoby</label>
                                         <div class="form-group" id="input-checkboxes2">

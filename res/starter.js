@@ -1,4 +1,6 @@
 let events = new Events();
+let exporting = false;
+let last_date = null;
 
 function startPage() {
     let $main = $("#main-jumbotron");

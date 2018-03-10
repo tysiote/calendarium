@@ -28,12 +28,13 @@ function addEventClicked() {
     let content = $("#input-content").val();
     let date = $("#input-date").val();
     let tags1 = {
-        home: $("#input-checkbox-home").is(":checked"),
-        abroad: $("#input-checkbox-abroad").is(":checked"),
+        politics: $("#input-checkbox-politics").is(":checked"),
+        justice: $("#input-checkbox-justice").is(":checked"),
         economic: $("#input-checkbox-economic").is(":checked"),
         sport: $("#input-checkbox-sport").is(":checked"),
-        photo: $("#input-checkbox-photo").is(":checked"),
-        video: $("#input-checkbox-video").is(":checked"),
+        culture: $("#input-checkbox-culture").is(":checked"),
+        local: $("#input-checkbox-local").is(":checked"),
+        anniversary: $("#input-checkbox-anniversary").is(":checked"),
     };
     let tags2 = {
         text: $("#input-checkbox-tag-text").is(":checked"),

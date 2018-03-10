@@ -143,9 +143,19 @@ body {
 }
 
 .daily-event-title {
+    margin-top: 0;
     margin-left: 10px;
     font-size: 26px;
     text-decoration: underline;
+    float: left;
+}
+
+.export-button {
+    margin-right: 10px;
+    font-size: 14px;
+    float: right;
+    height: 30px;
+    padding-top: 4px;
 }
 
 .custom-checkbox {

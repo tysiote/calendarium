@@ -33,7 +33,19 @@ class Events {
         this.events.forEach(function(e) {
             if (e.start_time.day === d && e.start_time.month === m && e.start_time.year === y) result.push(e);
         });
-        return result;
+        return this.sorted(result, "time");
+    }
+
+    sorted(subset, key) {
+        if (key === "time") {
+            subset.forEach(function(e) {e.formatted_time = e.start_time.hour + ":" + e.start_time.minute});
+            console.log(subset);
+            subset = subset.sort(function(a, b) {
+                return ((a.formatted_time < b.formatted_time) ? -1 : ((a.formatted_time > b.formatted_time) ? 1 : 0));
+            });
+            console.log(subset);
+        }
+        return subset;
     }
 }
 
@@ -72,7 +84,7 @@ class Event {
             let temp = this.tags1.split("|");
             temp.forEach(function(t) {
                 t = t.toLowerCase();
-                result += '<span class="tag tag-' + t + '">' + translateTag(t) + '</span> ';
+                result += '<span class="tag category tag-' + t + '">' + translateTag(t) + '</span> ';
             });
         }
         return result;

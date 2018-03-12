@@ -10,7 +10,7 @@ body {
 }
 
 .tag {
-    margin-left: 5px;
+    margin-right: 5px;
     float: right;
     padding-right: 10px;
     width: 55px;
@@ -18,6 +18,16 @@ body {
     border: 1px solid white;
     border-radius: 5px;
     text-align: center;
+}
+
+.category {
+    width: 100px;
+    border-color: #8c8c8c;
+    border-radius: 3px;
+    font-weight: bold;
+    padding-top: 2px;
+    margin-bottom: 2px;
+    margin-top: 2px;
 }
 
 .tag-video {
@@ -38,6 +48,41 @@ body {
 .tag-photo {
     color: white;
     background-color: #014f95;
+}
+
+.tag-politics {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-justice {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-economic {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-sport {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-culture {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-area {
+    color: #222222;
+    background-color: #dddddd;
+}
+
+.tag-anniversary {
+    color: #222222;
+    background-color: #dddddd;
 }
 
 .event-btn {
@@ -175,4 +220,32 @@ body {
     margin-top: 0;
     margin-bottom: 0;
     display: inline;
+}
+
+.export-button-options {
+    float: right;
+    height: 30px;
+    font-size: 14px;
+    margin-right: 10px;
+    padding-top: 4px;
+}
+
+.search-input {
+    height: 40px;
+    width: 250px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.search-div {
+    margin-top: 30px;
+    height: 40px;
+}
+
+.filter-button {
+    margin-right: 10px;
+    font-size: 14px;
+    float: right;
+    height: 30px;
+    padding-top: 4px;
 }

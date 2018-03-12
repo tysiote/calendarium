@@ -1,6 +1,7 @@
 let events = new Events();
 let exporting = false;
 let last_date = null;
+let active_filters = {};
 
 function startPage() {
     let $main = $("#main-jumbotron");

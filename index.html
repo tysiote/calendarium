@@ -12,6 +12,8 @@
     <script src="bootstrap/js/collapse.js"></script>
     <script src="bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
     <script src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="bootstrap/js/bootstrap-toggle.min.js"></script>
+    <script src="bootstrap/js/jspdf.min.js"></script>
     <!--<script src="bootstrap/js/index.js"></script>-->
     <!--<script src="bootstrap/js/jquery.mobile-1.4.5.min.js"></script>-->
     <!--<script src="bootstrap/js/jquery.ui.datepicker.js"></script>-->
@@ -24,6 +26,7 @@
     <script src="res/sk.js"></script>
     <script src="res/builder.js"></script>
     <script src="res/exporter.js"></script>
+    <script src="res/filters.js"></script>
     <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile-1.4.5.min.css">-->
     <!--<link rel="stylesheet" href="bootstrap/css/jqm-demos.css">-->
     <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
@@ -32,8 +35,12 @@
     <link href="bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="res/checkboxes.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link href="res/calendarium.css" rel="stylesheet">
+    <link rel="stylesheet" href="bootstrap/css/bootsnipp-toggle-switch.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-search.css">
     <title>TASR Calendarium</title>
+
 </head>
 <body>
         <div id="add-new-event" class="modal fade" role="dialog">
@@ -41,7 +48,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">New event</h4>
+                        <h4 class="modal-title">Nová udalosť</h4>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -108,8 +115,37 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="addEventClicked();">Add event</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                        <button type="button" class="btn btn-primary" onclick="addEventClicked();">Pridaj udalosť</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="export-preview" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="export-preview-header">Export</h4>
+                    </div>
+                    <div class="modal-body" id="export-preview-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="filters-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Možnosti filtrov</h4>
+                    </div>
+                    <div class="modal-body" id="filters-modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="setFilters();" data-dismiss="modal">Aplikuj filtre</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
                     </div>
                 </div>
             </div>
@@ -117,8 +153,12 @@
         <div id="screen">
             <div id="sidebar" class="sidebar">
                 <img src="assets/logo.png" class="sidebar-logo"/>
-                <div id="main-datepicker" style="background-color: white;"></div>
                 <button type="button" class="btn btn-lg btn-sidebar" data-toggle="modal" data-target="#add-new-event">Nová udalosť</button>
+                <div id="main-datepicker" style="background-color: white;"></div>
+
+                <div class="search-container search-div">
+                    <input type="text" class="search-input" placeholder="Hľadaj udalosť" name="search">
+                </div>
                 <button type="button" style="visibility: hidden;" onClick="mainDateChanged()" value="" id="test"></button>
             </div>
             <div class="main">

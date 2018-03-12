@@ -27,6 +27,7 @@ function selectAll() {
         b.prop("checked", unchecked > 0);
     });
     $("#select-all-checkbox").prop("checked", unchecked === 0);
+    validateExportOptionsButtons();
 }
 
 function translateTag(tag) {
@@ -34,6 +35,14 @@ function translateTag(tag) {
     if (tag === "text") return "Text";
     if (tag === "audio") return "Zvuk";
     if (tag === "photo") return "Foto";
+
+    if (tag === "politics") return "Politika";
+    if (tag === "justice") return "Justícia";
+    if (tag === "economic") return "Ekonomika";
+    if (tag === "sport") return "Šport";
+    if (tag === "culture") return "Kultúra";
+    if (tag === "area") return "Samospráva";
+    if (tag === "anniversary") return "Výročie";
 }
 
 function addEventClicked() {
@@ -84,4 +93,11 @@ function addEventClicked() {
     } else {
         $err.html(error);
     }
+}
+
+function customReplace(s1, s2, s3) {
+    while (s1.indexOf(s2) !== -1) {
+        s1 = s1.replace(s2, s3);
+    }
+    return s1;
 }

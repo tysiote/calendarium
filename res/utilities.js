@@ -14,6 +14,21 @@ function editExistingEvent(event) {
     sendEvent(parsePostData(event.exportToPost()));
 }
 
+function selectAll() {
+    let unchecked = 0;
+    let checked = 0;
+    let checkboxes = [];
+    $(".dummy-selector-class-checkbox").each(function (i, v) {
+        checkboxes.push($(v));
+        if ($(v).prop("checked")) checked++;
+        else unchecked++;
+    });
+    checkboxes.forEach(function(b) {
+        b.prop("checked", unchecked > 0);
+    });
+    $("#select-all-checkbox").prop("checked", unchecked === 0);
+}
+
 function translateTag(tag) {
     if (tag === "video") return "Video";
     if (tag === "text") return "Text";

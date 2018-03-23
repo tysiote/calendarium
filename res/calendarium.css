@@ -86,7 +86,7 @@ body {
 }
 
 .event-btn {
-    padding-top: 10px !important;
+    padding-top: 3px !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     border: 0;
@@ -97,10 +97,10 @@ body {
     font-size: 14px;
 }
 
-.event-btn:hover {
-    border: 0;
-    background-color: #f3f3f3;
-}
+/*.event-btn:hover {*/
+    /*border: 0;*/
+    /*background-color: #f3f3f3;*/
+/*}*/
 
 .custom-col {
     padding-left: 0 !important;
@@ -161,6 +161,12 @@ body {
     color: white;
     background-color: #0063b3;
 }
+
+.btn-sidebar-small {
+    width: 220px;
+    margin-left: 30px;
+}
+
 .sidebar-logo {
     margin-top: 20px;
     margin-bottom: 50px;
@@ -187,14 +193,17 @@ body {
     padding-left: 10px !important;
     font-size: 16px;
     font-weight: bold;
+    display: inline-block;
+    float: left;
+    height: 25px;
 }
 
 .daily-event-title {
     margin-top: 0;
-    margin-left: 10px;
+    font-weight: bold;
     font-size: 26px;
-    /*text-decoration: underline;*/
-    float: left;
+    color: dimgrey;
+    padding-left: 30px;
 }
 
 .export-button {
@@ -211,41 +220,75 @@ body {
 }
 
 .row-checkbox {
+    padding-top: 3px !important;
     margin-top: 17px;
-    margin-left: 25px !important;
+    margin-left: 20px !important;
     height: 25px;
+    float: left;
 }
 
 .select-all-checkbox {
     margin-top: 0;
     margin-bottom: 0;
-    display: inline;
-}
-
-.export-button-options {
-    float: right;
-    height: 30px;
-    font-size: 14px;
-    margin-right: 10px;
-    padding-top: 4px;
+    width: 100%;
 }
 
 .search-input {
     height: 40px;
-    width: 250px;
-    margin-left: 0;
-    margin-right: 0;
+    width: 100%;
 }
 
 .search-div {
-    margin-top: 30px;
     height: 40px;
+    width: 94%;
+    margin: 10px 3%;
+    padding: 2px;
 }
 
-.filter-button {
+.table-button {
     margin-right: 10px;
     font-size: 14px;
     float: right;
     height: 30px;
     padding-top: 4px;
+}
+
+.filter-button {
+    width: 100%;
+}
+
+.views-button {
+    width: 100%;
+}
+
+.special-event {
+    color: darkred;
+}
+
+.view-additional-info {
+    width: 100%;
+}
+
+.views-weeks-select {
+    width: 100%;
+}
+
+.month-separator {
+    margin-bottom: 10px;
+    /*border-bottom: 1px solid #898989;*/
+}
+
+.month-week-title {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 26px;
+    color: #0063b3;
+    padding-left: 20px;
+}
+
+.filter-info {
+    display: inline;
+    color: dimgrey;
+    font-style: italic;
+    font-size: 12px;
 }

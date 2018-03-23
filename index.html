@@ -14,6 +14,10 @@
     <script src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="bootstrap/js/bootstrap-toggle.min.js"></script>
     <script src="bootstrap/js/jspdf.min.js"></script>
+    <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="bootstrap/js/i18n/defaults-sk_SK.js"></script>
+    <script src="bootstrap/js/underscore-min.js"></script>
     <!--<script src="bootstrap/js/index.js"></script>-->
     <!--<script src="bootstrap/js/jquery.mobile-1.4.5.min.js"></script>-->
     <!--<script src="bootstrap/js/jquery.ui.datepicker.js"></script>-->
@@ -27,6 +31,7 @@
     <script src="res/builder.js"></script>
     <script src="res/exporter.js"></script>
     <script src="res/filters.js"></script>
+    <script src="res/views.js"></script>
     <!--<link rel="stylesheet" href="bootstrap/css/jquery.mobile-1.4.5.min.css">-->
     <!--<link rel="stylesheet" href="bootstrap/css/jqm-demos.css">-->
     <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">-->
@@ -39,12 +44,13 @@
     <link href="res/calendarium.css" rel="stylesheet">
     <link rel="stylesheet" href="bootstrap/css/bootsnipp-toggle-switch.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-search.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-select-min.css">
     <title>TASR Calendarium</title>
 
 </head>
 <body>
         <div id="add-new-event" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -61,7 +67,7 @@
                                 <textarea class="form-control" rows="5" id="input-content" placeholder="Zadajte popis"></textarea>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="col-md-3 col-sm-3 col-lg-3">
                                     <div class="form-group">
                                         <label for="input-checkboxes">Členenie</label>
                                         <div class="form-group" id="input-checkboxes">
@@ -75,9 +81,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="col-md-3 col-sm-3 col-lg-3">
                                     <div class="form-group">
-                                        <label for="input-checkboxes">Kraje</label>
+                                        <label for="input-checkboxes">Kraj</label>
                                         <div class="form-group" id="input-checkboxes3">
                                             <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-ba"><label for="input-checkbox-area-ba" class="checkbox-inline">Bratislavský kraj</label></div>
                                             <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-area-tt"><label for="input-checkbox-area-tt" class="checkbox-inline">Trnavský kraj</label></div>
@@ -90,9 +96,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="col-md-3 col-sm-3 col-lg-3">
                                     <div class="form-group">
-                                        <label for="input-checkboxes">Spôsoby</label>
+                                        <label for="input-checkboxes">Forma</label>
+                                        <div class="form-group" id="input-checkboxes4">
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-press"><label for="input-checkbox-form-press" class="checkbox-inline">Tlačová beseda</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-briefing"><label for="input-checkbox-form-briefing" class="checkbox-inline">Brífing</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-conference"><label for="input-checkbox-form-conference" class="checkbox-inline">Konferencia</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-fete"><label for="input-checkbox-form-fete" class="checkbox-inline">Slávnosť</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-congress"><label for="input-checkbox-form-congress" class="checkbox-inline">Snem</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-festival"><label for="input-checkbox-form-festival" class="checkbox-inline">Festival</label></div>
+                                            <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-event"><label for="input-checkbox-form-event" class="checkbox-inline">Podujatie</label></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="input-checkboxes">Spôsob</label>
                                         <div class="form-group" id="input-checkboxes2">
                                             <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-text"><label for="input-checkbox-tag-text" class="checkbox-inline">Text</label></div>
                                             <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-tag-video"><label for="input-checkbox-tag-video" class="checkbox-inline">Video</label></div>
@@ -111,12 +131,19 @@
                                     <script type="text/javascript">$(function () {$('#datetimepicker1').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="input-checkboxes">Viditeľnosť</label>
+                                <div class="form-group" id="input-checkboxes5">
+                                    <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-visibility-special"><label for="input-checkbox-visibility-special" class="checkbox-inline">Špeciálna udalosť</label></div>
+                                    <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-visibility-public"><label for="input-checkbox-visibility-public" class="checkbox-inline">Verejné</label></div>
+                                </div>
+                            </div>
                             <p class="error-msg" id="input-new-error"></p>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
-                        <button type="button" class="btn btn-primary" onclick="addEventClicked();">Pridaj udalosť</button>
+                        <button type="button" class="btn btn-primary" onclick="addEventClicked();">Pridať udalosť</button>
                     </div>
                 </div>
             </div>
@@ -136,7 +163,7 @@
             </div>
         </div>
         <div id="filters-modal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -144,7 +171,22 @@
                     </div>
                     <div class="modal-body" id="filters-modal-body"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="setFilters();" data-dismiss="modal">Aplikuj filtre</button>
+                        <button type="button" class="btn btn-primary" onclick="setFilters();" data-dismiss="modal">Potvrdiť</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="views-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Možnosti zobrazenia</h4>
+                    </div>
+                    <div class="modal-body" id="views-modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="setView();" data-dismiss="modal">Potvrdiť</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
                     </div>
                 </div>
@@ -155,10 +197,7 @@
                 <img src="assets/logo.png" class="sidebar-logo"/>
                 <button type="button" class="btn btn-lg btn-sidebar" data-toggle="modal" data-target="#add-new-event">Nová udalosť</button>
                 <div id="main-datepicker" style="background-color: white;"></div>
-
-                <div class="search-container search-div">
-                    <input type="text" class="search-input" placeholder="Hľadaj udalosť" name="search">
-                </div>
+                <div id="other-navigation"></div>
                 <button type="button" style="visibility: hidden;" onClick="mainDateChanged()" value="" id="test"></button>
             </div>
             <div class="main">

@@ -21,6 +21,10 @@ function parseDate(input, type) {
         result.day = parseInt(date.split("-")[2]);
         result.hour = parseInt(time.split(":")[0]);
         result.minute = parseInt(time.split(":")[1]);
+        result.sortingvalue = result.hour.toString() + "";
+        if (result.sortingvalue.length === 1) result.sortingvalue = "0" + result.sortingvalue;
+        if (result.minute < 10) result.sortingvalue += "0" + result.minute.toString();
+        else result.sortingvalue += result.minute.toString();
         return result;
     }
     return null;
@@ -36,8 +40,11 @@ function parsePostData(obj) {
 function parseMonth(input) {
     let months = ["január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október", "november", "december"];
     let months2 = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-    if (months.indexOf(input.toLowerCase()) !== -1) return months.indexOf(input.toLowerCase()) + 1;
-    if (months2.indexOf(input.toLowerCase()) !== -1) return months2.indexOf(input.toLowerCase()) + 1;
+    if (typeof input === "string") {
+        if (months.indexOf(input.toLowerCase()) !== -1) return months.indexOf(input.toLowerCase()) + 1;
+        if (months2.indexOf(input.toLowerCase()) !== -1) return months2.indexOf(input.toLowerCase()) + 1;
+    }
+    if (typeof input === "number" && input >= 0 && input < 12) return months[input].substr(0, 1).toUpperCase() + months[input].substr(1, months[input].length).toLowerCase();
     return false;
 }
 
@@ -47,8 +54,43 @@ function parseWeekDay(input) {
     return false;
 }
 
-function translateWeekDay(input) {
+function translateWeekDay(input, shifted) {
     let days = ["pondelok", "utorok", "streda", "štvrtok", "piatok", "sobota", "nedeľa"];
+    if (shifted) days = ["nedeľa", "pondelok", "utorok", "streda", "štvrtok", "piatok", "sobota"];
     if (input !== false) return days[input];
     return false
+}
+
+function parseMonthSlovak(index) {
+    let months = ["januára", "februára", "marca", "apríla", "mája", "júna", "júla", "augusta", "septembra", "októbra", "novembra", "decembra"];
+    return months[index];
+}
+
+function parseTextToSearch(input) {
+    let dict = {
+        "á": "a",
+        "ä": "a",
+        "č": "c",
+        "ď": "d",
+        "é": "e",
+        "ě": "e",
+        "í": "i",
+        "ľ": "l",
+        "ĺ": "l",
+        "ň": "n",
+        "ó": "o",
+        "ô": "o",
+        "ö": "o",
+        "ř": "r",
+        "ŕ": "r",
+        "š": "s",
+        "ť": "t",
+        "ú": "u",
+        "ü": "u",
+        "ý": "y",
+        "ž": "z"
+    };
+    let result = input.toLowerCase();
+    for (let key in dict) result = customReplace(result, key, dict[key]);
+    return result;
 }

@@ -36,9 +36,13 @@ function setData($data) {
     $start_time = $data['start_time']."-00";
     $tags1 = $data['tags1'];
     $tags2 = $data['tags2'];
-    $sql = "INSERT INTO calendarium (title, content, start_time, tags1, tags2) VALUES ('$title', '$content', '$start_time', '$tags1', '$tags2')";
-    $result = array("status" => $con->query($sql));
-    echo json_encode(200);
+    $tags3 = $data['tags3'];
+    $tags4 = $data['tags4'];
+    $special = $data['special'];
+    $public = $data['public'];
+    $sql = "INSERT INTO calendarium (title, content, start_time, tags1, tags2, tags3, tags4, special, public) VALUES ('$title', '$content', '$start_time', '$tags1', '$tags2', '$tags3', '$tags4', $special, $public)";
+    $result = array("status" => $con->query($sql), "id" => $con->insert_id);
+    echo json_encode($result);
 }
 
 function updateData($data) {

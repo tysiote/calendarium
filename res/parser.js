@@ -1,6 +1,5 @@
 function parseResponse(res) {
     let result = JSON.parse(res);
-    console.log(result);
     result.forEach(function(e) {
         e.start_time = parseDate(e.start_time, "decode");
         e.id = parseInt(e.id);
@@ -21,10 +20,19 @@ function parseDate(input, type) {
         result.day = parseInt(date.split("-")[2]);
         result.hour = parseInt(time.split(":")[0]);
         result.minute = parseInt(time.split(":")[1]);
+
         result.sortingvalue = result.hour.toString() + "";
         if (result.sortingvalue.length === 1) result.sortingvalue = "0" + result.sortingvalue;
         if (result.minute < 10) result.sortingvalue += "0" + result.minute.toString();
         else result.sortingvalue += result.minute.toString();
+
+        result.sortingvaluedate = result.year.toString() + "";
+        if (result.month < 10) result.sortingvaluedate += "0" + result.month.toString();
+        else result.sortingvaluedate += result.month.toString();
+        if (result.day < 10) result.sortingvaluedate += "0" + result.day.toString();
+        else result.sortingvaluedate += result.day.toString();
+        result.sortingvaluedate += result.sortingvalue;
+
         return result;
     }
     return null;

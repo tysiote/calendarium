@@ -6,15 +6,25 @@ function addNewEvent(data) {
         console.log(res.status, res.id);
         if (!res.status) alert("Chyba na strane servera");
         else temp.id = res.id;
-        $("#add-new-event button").each(function(i, v) {
-            $(v).attr("disabled", false);
-            $("#add-new-event").modal("hide");
-        })
+        $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
+        $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
+        $("#add-new-event").modal("hide");
+        yearChanged();
     });
 }
 
-function editExistingEvent(event) {
-    sendEvent(parsePostData(event.exportToPost()));
+function editExistingEvent(data) {
+    let id = editing_event.id;
+    let temp = new Event(data);
+    temp.id = id;
+    events.update(temp);
+    sendEvent(parsePostData(temp.exportToPost(false))).then(function(res) {
+        if (!res.status) alert("Chyba na strane servera");
+        $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
+        $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
+        $("#edit-event").modal("hide");
+        yearChanged();
+    });
 }
 
 function invokeCalendarClick() {
@@ -68,49 +78,50 @@ function translateTag(tag) {
     return '';
 }
 
-function addEventClicked() {
-    let $err = $("#input-new-error");
+function addEventClicked(edit) {
+    if (!edit) edit = '';
+    let $err = $("#input-new-error" + edit);
     $err.html("");
-    let title = $("#input-title").val();
-    let content = $("#input-content").val();
-    let date = $("#input-date").val();
+    let title = $("#input-title" + edit).val();
+    let content = $("#input-content" + edit).val();
+    let date = $("#input-date" + edit).val();
     let tags1 = {
-        politics: $("#input-checkbox-politics").is(":checked"),
-        justice: $("#input-checkbox-justice").is(":checked"),
-        economic: $("#input-checkbox-economic").is(":checked"),
-        sport: $("#input-checkbox-sport").is(":checked"),
-        culture: $("#input-checkbox-culture").is(":checked"),
-        local: $("#input-checkbox-local").is(":checked"),
-        anniversary: $("#input-checkbox-anniversary").is(":checked"),
+        politics: $("#input-checkbox-politics" + edit).is(":checked"),
+        justice: $("#input-checkbox-justice" + edit).is(":checked"),
+        economic: $("#input-checkbox-economic" + edit).is(":checked"),
+        sport: $("#input-checkbox-sport" + edit).is(":checked"),
+        culture: $("#input-checkbox-culture" + edit).is(":checked"),
+        local: $("#input-checkbox-local" + edit).is(":checked"),
+        anniversary: $("#input-checkbox-anniversary" + edit).is(":checked"),
     };
     let tags2 = {
-        text: $("#input-checkbox-tag-text").is(":checked"),
-        video: $("#input-checkbox-tag-video").is(":checked"),
-        audio: $("#input-checkbox-tag-audio").is(":checked"),
-        photo: $("#input-checkbox-tag-photo").is(":checked"),
+        text: $("#input-checkbox-tag-text" + edit).is(":checked"),
+        video: $("#input-checkbox-tag-video" + edit).is(":checked"),
+        audio: $("#input-checkbox-tag-audio" + edit).is(":checked"),
+        photo: $("#input-checkbox-tag-photo" + edit).is(":checked"),
     };
     let tags3 = {
-        ba: $("#input-checkbox-area-ba").is(":checked"),
-        tt: $("#input-checkbox-area-tt").is(":checked"),
-        tn: $("#input-checkbox-area-tn").is(":checked"),
-        nr: $("#input-checkbox-area-nr").is(":checked"),
-        bb: $("#input-checkbox-area-bb").is(":checked"),
-        za: $("#input-checkbox-area-za").is(":checked"),
-        po: $("#input-checkbox-area-po").is(":checked"),
-        ke: $("#input-checkbox-area-ke").is(":checked"),
+        ba: $("#input-checkbox-area-ba" + edit).is(":checked"),
+        tt: $("#input-checkbox-area-tt" + edit).is(":checked"),
+        tn: $("#input-checkbox-area-tn" + edit).is(":checked"),
+        nr: $("#input-checkbox-area-nr" + edit).is(":checked"),
+        bb: $("#input-checkbox-area-bb" + edit).is(":checked"),
+        za: $("#input-checkbox-area-za" + edit).is(":checked"),
+        po: $("#input-checkbox-area-po" + edit).is(":checked"),
+        ke: $("#input-checkbox-area-ke" + edit).is(":checked"),
     };
     let tags4 = {
-        press: $("#input-checkbox-form-press").is(":checked"),
-        briefing: $("#input-checkbox-form-briefing").is(":checked"),
-        conference: $("#input-checkbox-form-conference").is(":checked"),
-        fete: $("#input-checkbox-form-fete").is(":checked"),
-        congress: $("#input-checkbox-form-congress").is(":checked"),
-        festival: $("#input-checkbox-form-festival").is(":checked"),
-        event: $("#input-checkbox-form-event").is(":checked"),
+        press: $("#input-checkbox-form-press" + edit).is(":checked"),
+        briefing: $("#input-checkbox-form-briefing" + edit).is(":checked"),
+        conference: $("#input-checkbox-form-conference" + edit).is(":checked"),
+        fete: $("#input-checkbox-form-fete" + edit).is(":checked"),
+        congress: $("#input-checkbox-form-congress" + edit).is(":checked"),
+        festival: $("#input-checkbox-form-festival" + edit).is(":checked"),
+        event: $("#input-checkbox-form-event" + edit).is(":checked"),
     };
     let tags5 = {
-        public: $("#input-checkbox-visibility-public").is(":checked"),
-        special: $("#input-checkbox-visibility-special").is(":checked"),
+        public: $("#input-checkbox-visibility-public" + edit).is(":checked"),
+        special: $("#input-checkbox-visibility-special" + edit).is(":checked"),
     };
     let temp = {};
     let error = "";
@@ -142,10 +153,12 @@ function addEventClicked() {
         temp_date.hour = parseInt(date.split(" ")[4].split(":")[0]);
         temp_date.minute = parseInt(date.split(" ")[4].split(":")[1]);
         temp.start_time = temp_date;
-        addNewEvent(temp);
+        if (edit && edit.length) editExistingEvent(temp);
+        else addNewEvent(temp);
         console.log(tags5);
         console.log(temp);
         $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", "true");})
+        $("#edit-new-event button").each(function(i, v) {$(v).attr("disabled", "true");})
     } else {
         $err.html(error);
     }

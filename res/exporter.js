@@ -31,7 +31,7 @@ function exportMainPressed(content) {
 
     let result = '<table class="table"><thead><tr>';
     if (viewing_mode !== "day") result += '<th>Deň</th>';
-    result += '<th>Čas</th><th>Udalosť</th>' + content_th + '<th>Forma</th><th>Spôsob</th></tr></thead><tbody>';
+    result += '<th>Čas</th><th>Udalosť</th>' + content_th + '<th>Spôsob</th></tr></thead><tbody>';
     selected.forEach(function(r) {result += exportOneRow(parseInt(r.prop("id").split("-")[2]), content, viewing_mode !== "day");});
     result += '</tbody></table>';
     $("#export-preview-body").html(result);
@@ -45,54 +45,51 @@ function exportOneRow(id, content, with_day) {
     result += '<td>' + e.htmlStartTime() + '</td><td>' + e.title + '</td>';
     if (content) result += '<td>' + e.content + '</td>';
     let tags2 = e.tags2.split("|");
-    let tags3 = e.tags3.split("|");
     let res = '';
-    tags3.forEach(function(t) {res += translateTag(t.toLowerCase()) + ", ";});
-    result += '<td>' + res.substring(0, res.length - 2) + '</td>';
-    res = '';
     tags2.forEach(function(t) {res += translateTag(t.toLowerCase()) + ", ";});
     result += '<td>' + res.substring(0, res.length - 2) + '</td>';
-    // result += '<td>' + customReplace(e.tags1, "|", ", ") + '</td><td>' + customReplace(e.tags2, "|", ", ") + '</td>';
     return result;
 }
 
 function exportRaw() {
     let selected = [];
     $(".dummy-selector-class-checkbox").each(function(i, v) {if ($(v).prop("checked")) selected.push($(v));});
-    let result = "<table><tbody>";
+    let result = "";
     if (viewing_mode === "day") {
         selected.forEach(function(r) {result += exportRawOneDaily(parseInt(r.prop("id").split("-")[2]));});
     } else {
         selected.forEach(function(r) {result += exportRawOneWeekly(parseInt(r.prop("id").split("-")[2]));});
     }
-    result += "</tbody></table>";
+    result += "";
     fnExcelReport(result);
 }
 
 function exportRawOneDaily(id) {
     let e = events.get(id);
-    let result = '<tr>';
-    result += '' +
-        '<td>' + e.htmlStartTime().replace(":", ".") + '</td>' +
-        '<td>' + e.title + ' --- ' + e.content + '</td>' +
-        '<td>' + e.htmlTags2() + '</td>';
-    result += '</tr>';
+    let result = '';
+    result += e.htmlStartDate() + "\t" + e.htmlStartTime().replace(":", ".") + "\t" + e.title + ". " + e.content + "\t" + e.htmlTags2(true) + '\n';
     return result;
 }
 
 function exportRawOneWeekly(id) {
     let e = events.get(id);
-    let result = '<tr>';
-    result += '' +
-        '<td>' + e.start_time.day.toString() + '.' + parseMonthSlovak(e.start_time.month) + '</td>' +
-        '<td>' + e.htmlStartTime().replace(":", ".") + '</td>' +
-        '<td>' + e.title + ' --- ' + e.content + '</td>';
-    result += '</tr>';
+    let result = '';
+    result += e.htmlStartDate() + "\t" + e.htmlStartTime().replace(":", ".") + "\t" + e.title + "\t" + e.content + "\n";
     return result;
 }
 
 function fnExcelReport(tab_text) {
-    let ua = window.navigator.userAgent;
-    let sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-    return (sa);
+    // let ua = window.navigator.userAgent;
+    // let sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+    // return (sa);
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(tab_text));
+    element.setAttribute('download', "export.txt");
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }

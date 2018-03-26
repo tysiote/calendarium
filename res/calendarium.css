@@ -292,3 +292,83 @@ body {
     font-style: italic;
     font-size: 12px;
 }
+
+.tasr-navbar {
+    height: 75px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #014f95;
+    z-index: 1000;
+}
+
+.sidebar-logo-admin {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 250px;
+    height: 75px;
+}
+
+.admin-main {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(#9cbad6, white);
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.btn-sidebar-admin {
+    width: 250px;
+    text-align: left;
+    background-color: inherit;
+    color: white;
+    margin-top: 10px;
+    font-size: 32px;
+    margin-left: 100px;
+}
+.btn-sidebar-admin:hover {
+    color: white;
+    background-color: #0063b3;
+}
+.btn-sidebar-admin::selection {
+    color: white;
+    background-color: #0063b3;
+}
+
+.admin-events-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+.admin-yr-select {
+    margin-left: 10px;
+    margin-bottom: 20px;
+    width: 150px;
+    font-size: 18px;
+    height: 30px;
+}
+
+.event-btn-admin {
+    font-size: 18px;
+    width: inherit;
+}
+
+.fa-admin {
+    font-size: 18px;
+}
+
+.fa-button {
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    margin-top: -5px;
+}

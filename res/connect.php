@@ -46,14 +46,24 @@ function setData($data) {
 }
 
 function updateData($data) {
-    $con = connectDatabase();
-    $sql = "UPDATE calendarium";
-    $sql .= " SET ";
-    foreach($data as $key=>$value) {
-        if ($key != "id") $sql .= $key . " = '". $value . "', ";
+    if (array_key_exists("remove", $data)) deleteData($data['id']);
+    else {
+        $con = connectDatabase();
+        $sql = "UPDATE calendarium";
+        $sql .= " SET ";
+        foreach($data as $key=>$value) {
+            if ($key != "id") $sql .= $key . " = '". $value . "', ";
+        }
+        $sql = substr($sql, 0, -2) . " WHERE id = " . $data['id'];
+        $result = array("status" => $con->query($sql));
+        echo json_encode($result);
     }
-    $sql = substr($sql, 0, -2) . " WHERE id = " . $data['id'];
-    $result = array("status" => $con->query($sql));
+}
+
+function deleteData($id) {
+    $con = connectDatabase();
+    $sql = "DELETE FROM calendarium WHERE id=$id";
+    $con->query($sql);
     echo json_encode(200);
 }
 

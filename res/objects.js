@@ -15,14 +15,47 @@ class Events {
         return null;
     }
 
-    getTags(tag) {
-        let result = [];
-        this.events.forEach(function(e) {if (e.tags.indexOf(tag.toLowerCase()) !== -1) result.push(e);});
-        return result;
+    update(temp) {
+        console.log(temp);
+        let old = this.get(temp.id);
+        old.title = temp.title;
+        old.id = temp.id;
+        old.content = temp.content;
+        old.content = old.content.replace(/\\r\\n/g, "<br>");
+        old.content = old.content.replace(/\\n/g, "<br>");
+        old.tags1 = temp.tags1;
+        old.tags2 = temp.tags2;
+        old.tags3 = temp.tags3;
+        old.tags4 = temp.tags4;
+
+        if (typeof temp.special === "string") {
+            if (temp.special === "0") old.special = false;
+            else old.special = true;
+        } else old.special = temp.special;
+
+        if (typeof temp.public === "string") {
+            if (temp.public === "0") old.public = false;
+            else old.public = true;
+        } else old.public = temp.public;
+        old.sortingvalue = temp.start_time.sortingvalue;
+        old.start_time = temp.start_time;
     }
 
     remove(event) {
         this.events.splice(this.events.indexOf(event), 1);
+    }
+
+    years() {
+        let result = [];
+        this.events.forEach(function(e) {if (result.indexOf(e.start_time.year) === -1) result.push(e.start_time.year);});
+        result.sort(function(a, b) {return a - b;});
+        return result;
+    }
+
+    filterByYear(yr) {
+        let result = [];
+        this.events.forEach(function(e) {if (e.start_time.year === yr) result.push(e);});
+        return this.sorted(result, "date");
     }
 
     filterDay(d, m, y) {
@@ -41,6 +74,7 @@ class Events {
         let result1 = [];
         let result2 = [];
         let result3 = [];
+        let result4 = [];
         if (active_filters.classes.length) {
             subset.forEach(function(e) {
                 let passed = false;
@@ -57,13 +91,21 @@ class Events {
             });
         } else subset.forEach(function(e) {result2.push(e);});
 
+        if (active_filters.forms.length) {
+            subset.forEach(function(e) {
+                let passed = false;
+                active_filters.forms.forEach(function(f) {if (e.tags4.indexOf(f) !== -1) passed = true;});
+                if (passed) result3.push(e);
+            });
+        } else subset.forEach(function(e) {result3.push(e);});
+
         if (active_filters.search.length) {
             subset.forEach(function(e) {
                 if (parseTextToSearch(e.title).indexOf(parseTextToSearch(active_filters.search)) !== -1) result3.push(e);
             });
-        } else subset.forEach(function(e) {result3.push(e);});
+        } else subset.forEach(function(e) {result4.push(e);});
         subset.forEach(function(e) {
-            if (result1.indexOf(e) !== -1 && result2.indexOf(e) !== -1 && result3.indexOf(e) !== -1) result.push(e);
+            if (result1.indexOf(e) !== -1 && result2.indexOf(e) !== -1 && result3.indexOf(e) !== -1 && result4.indexOf(e) !== -1) result.push(e);
         });
         return result;
     }
@@ -71,6 +113,9 @@ class Events {
     sorted(subset, key) {
         if (key === "time") {
             return _.sortBy(subset, 'sortingvalue');
+        }
+        if (key === "date") {
+            return _.sortBy(subset, 'sortingvaluedate');
         }
         return subset;
     }
@@ -98,6 +143,7 @@ class Event {
             else this.public = true;
         } else this.public = data.public;
         this.sortingvalue = data.start_time.sortingvalue;
+        this.sortingvaluedate = data.start_time.sortingvaluedate;
         this.start_time = data.start_time;
     }
 
@@ -115,7 +161,9 @@ class Event {
         };
         if (this.special) result.special = 1;
         if (this.public) result.public = 1;
-        if (!exporting_new) result.id = this.id;
+        if (!exporting_new) {
+            result.id = this.id;
+        }
         return result
     }
 
@@ -125,29 +173,19 @@ class Event {
     }
 
     htmlStartDate() {
-        return this.start_time.day + "." + this.start_time.month;
+        return this.start_time.day + "." + parseMonthSlovak(this.start_time.month - 1);
     }
 
-    htmlTags4() {
-        let result = '';
-        if (this.tags4 && this.tags4.length) {
-            let temp = this.tags4.split("|");
-            temp.forEach(function(t) {
-                t = t.toLowerCase();
-                result += '<span class="tag category tag-' + t + '">' + translateTag(t) + '</span> ';
-            });
-        }
-        return result;
-    }
-
-    htmlTags2() {
+    htmlTags2(non_html) {
         let result = '';
         if (this.tags2 && this.tags2.length) {
             let temp = this.tags2.split("|");
             temp.forEach(function(t) {
                 t = t.toLowerCase();
-                result += '<span class="tag tag-' + t + '">' + translateTag(t) + '</span> ';
+                if (non_html) result += translateTag(t) + ", ";
+                else result += '<span class="tag tag-' + t + '">' + translateTag(t) + '</span> ';
             });
+            if (non_html) result = result.substring(0, result.length - 2);
         }
         return result;
     }

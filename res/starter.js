@@ -4,7 +4,8 @@ let last_date = null;
 let active_filters = {
     search: "",
     classes: [],
-    areas: []
+    areas: [],
+    forms: []
 };
 let viewing_mode = "day";
 let viewing_params = "";

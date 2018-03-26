@@ -101,16 +101,15 @@ function populateOneEvent(e, day) {
     if (e.special) title_class += " special-event";
     result += '' +
             '<div class="row custom-row" id="cal-row-' + e.id + '">' +
-                '<div class="col-lg-8 col-md-6 col-sm-8 custom-col">' +
+                '<div class="col-lg-9 col-md-9 col-sm-9 custom-col">' +
                     checkbox_exporting +
                     '<div class="' + title_class + '">' +
                         '<button data-toggle="collapse" data-target="#cal-row-div-' + e.id + '" class="event-btn">' +
-                            '[' + html_date + e.htmlStartTime() + '] ' + e.title + '' +
+                            html_date + '[' + e.htmlStartTime() + '] ' + e.title + '' +
                         '</button>' +
                     '</div>' +
                 '</div>' +
-                '<div class="col-lg-2 col-md-3 col-sm-2 custom-col">' + e.htmlTags4() + '</div>' +
-                '<div class="col-lg-2 col-md-3 col-sm-2 custom-col">' + e.htmlTags2() + '</div>' +
+                '<div class="col-lg-3 col-md-3 col-sm-3 custom-col">' + e.htmlTags2() + '</div>' +
             '</div>' +
         '<div id="cal-row-div-' + e.id + '" class="collapse"><div class="event-content">' + e.content + '</div></div>';
     return result;

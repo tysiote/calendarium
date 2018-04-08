@@ -1,16 +1,46 @@
-function addNewEvent(data) {
-    let temp = new Event(data);
-    events.add(temp);
-    console.log(temp);
-    sendEvent(parsePostData(temp.exportToPost(true))).then(function(res) {
-        console.log(res.status, res.id);
-        if (!res.status) alert("Chyba na strane servera");
-        else temp.id = res.id;
-        $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
-        $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
-        $("#add-new-event").modal("hide");
-        yearChanged();
-    });
+function addNewEvent(data, bulk) {
+    if (bulk && bulk.length) {
+        let temp;
+        let temporary_temps = [];
+        bulk.forEach(function(e) {
+            temp = new Event(e);
+            events.add(temp);
+            temporary_temps.push(temp);
+        });
+        let bulks = temp.exportToPost(true);
+        for (let i = 1; i < bulk.length + 1; i++) bulks['start_time' + i] = parseDate(bulk[i - 1].start_time, "encode");
+        bulks = parsePostData(bulks);
+        sendEvent(parsePostData({bulk: true, count: bulk.length, events: bulks})).then(function(res) {
+            if (!res[0].status) alert("Chyba na strane servera");
+            else {
+                for (let i = 0; i < temporary_temps.length; i++) {
+                    temporary_temps[i].id = res[i].id;
+                    temporary_temps[i].added_date = res[i].added;
+                    temporary_temps[i].recalculateDates();
+                }
+            }
+            $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
+            $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
+            $("#add-new-event").modal("hide");
+            yearChanged();
+        });
+    } else {
+        let temp = new Event(data);
+        events.add(temp);
+        sendEvent(parsePostData(temp.exportToPost(true))).then(function(res) {
+            console.log(res.status, res.id);
+            if (!res.status) alert("Chyba na strane servera");
+            else {
+                temp.id = res.id;
+                temp.added_date = res.added;
+                temp.recalculateDates();
+            }
+            $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
+            $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
+            $("#add-new-event").modal("hide");
+            yearChanged();
+        });
+    }
 }
 
 function editExistingEvent(data) {
@@ -20,11 +50,14 @@ function editExistingEvent(data) {
     events.update(temp);
     sendEvent(parsePostData(temp.exportToPost(false))).then(function(res) {
         if (!res.status) alert("Chyba na strane servera");
+        temp.edited_date = res.edited;
+        temp.recalculateDates();
         $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", false);});
         $("#edit-event button").each(function(i, v) {$(v).attr("disabled", false);});
         $("#edit-event").modal("hide");
         yearChanged();
     });
+    dates_active = 1;
 }
 
 function invokeCalendarClick() {
@@ -71,6 +104,7 @@ function translateTag(tag) {
     if (tag === "congress") return "Snem";
     if (tag === "festival") return "Festival";
     if (tag === "event") return "Podujatie";
+    if (tag === "meeting") return "Zasadnutie";
 
     if (tag === "public") return "Verejné";
     if (tag === "special") return "Špeciálna udalosť";
@@ -118,6 +152,7 @@ function addEventClicked(edit) {
         congress: $("#input-checkbox-form-congress" + edit).is(":checked"),
         festival: $("#input-checkbox-form-festival" + edit).is(":checked"),
         event: $("#input-checkbox-form-event" + edit).is(":checked"),
+        meeting: $("#input-checkbox-form-meeting" + edit).is(":checked"),
     };
     let tags5 = {
         public: $("#input-checkbox-visibility-public" + edit).is(":checked"),
@@ -146,17 +181,24 @@ function addEventClicked(edit) {
         temp_tags = "";
         for (let key in tags4) if (tags4[key]) temp_tags += key + "|";
         temp.tags4 = temp_tags.substring(0, temp_tags.length - 1);
-        let temp_date = {};
-        temp_date.year = parseInt(date.split(" ")[3]);
-        temp_date.month = parseMonth(date.split(" ")[2]);
-        temp_date.day = parseInt(date.split(" ")[1].substring(0, date.split(" ")[1].length - 1));
-        temp_date.hour = parseInt(date.split(" ")[4].split(":")[0]);
-        temp_date.minute = parseInt(date.split(" ")[4].split(":")[1]);
-        temp.start_time = temp_date;
+        temp.start_time = parseStartTimeFromDate(date);
         if (edit && edit.length) editExistingEvent(temp);
-        else addNewEvent(temp);
-        console.log(tags5);
-        console.log(temp);
+        else {
+            console.log(dates_active);
+            if (dates_active > 1) {
+                let temps = [];
+                temp.start_time = parseStartTimeFromDate($("#input-date").val());
+                temps.push(temp);
+                for (let i = 1; i < dates_active; i++) {
+                    let t = Object.assign({}, temp);
+                    t.start_time = parseStartTimeFromDate($("#input-date-" + (i + 1)).val());
+                    temps.push(t);
+                }
+                addNewEvent(null, temps);
+            } else addNewEvent(temp);
+            moreDates(-dates_active);
+            dates_active = 1;
+        }
         $("#add-new-event button").each(function(i, v) {$(v).attr("disabled", "true");})
         $("#edit-new-event button").each(function(i, v) {$(v).attr("disabled", "true");})
     } else {
@@ -169,4 +211,19 @@ function customReplace(s1, s2, s3) {
         s1 = s1.replace(s2, s3);
     }
     return s1;
+}
+
+function parseStartTimeFromDate(date) {
+    let temp_date = {};
+    temp_date.year = parseInt(date.split(" ")[3]);
+    temp_date.month = parseMonth(date.split(" ")[2]);
+    temp_date.day = parseInt(date.split(" ")[1].substring(0, date.split(" ")[1].length - 1));
+    temp_date.hour = parseInt(date.split(" ")[4].split(":")[0]);
+    temp_date.minute = parseInt(date.split(" ")[4].split(":")[1]);
+    return temp_date;
+}
+
+function toPublicLink() {
+    let loc = location.href.toString();
+    window.open(loc.substring(0, loc.indexOf("set.html")), '_blank');
 }

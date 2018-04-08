@@ -100,6 +100,7 @@
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-congress"><label for="input-checkbox-form-congress" class="checkbox-inline">Snem</label></div>
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-festival"><label for="input-checkbox-form-festival" class="checkbox-inline">Festival</label></div>
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-event"><label for="input-checkbox-form-event" class="checkbox-inline">Podujatie</label></div>
+                                        <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-meeting"><label for="input-checkbox-form-meeting" class="checkbox-inline">Zasadnutie</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -123,11 +124,15 @@
                                 </span>
                                 <script type="text/javascript">$(function () {$('#datetimepicker1').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
                             </div>
+                            <div id="more-dates"></div>
+                            <div id="dates-controls" class="dates-options">
+                                <button type="button" class="btn btn-primary btn-date-option" onclick="moreDates(1);">Pridajte deň</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="input-checkboxes">Viditeľnosť</label>
                             <div class="form-group" id="input-checkboxes5">
-                                <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-visibility-special"><label for="input-checkbox-visibility-special" class="checkbox-inline">Špeciálna udalosť</label></div>
+                                <!--<div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-visibility-special"><label for="input-checkbox-visibility-special" class="checkbox-inline">Špeciálna udalosť</label></div>-->
                                 <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-visibility-public"><label for="input-checkbox-visibility-public" class="checkbox-inline">Verejné</label></div>
                             </div>
                         </div>
@@ -215,6 +220,7 @@
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-congress-edit"><label for="input-checkbox-form-congress-edit" class="checkbox-inline">Snem</label></div>
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-festival-edit"><label for="input-checkbox-form-festival-edit" class="checkbox-inline">Festival</label></div>
                                         <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-event-edit"><label for="input-checkbox-form-event-edit" class="checkbox-inline">Podujatie</label></div>
+                                        <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-form-meeting-edit"><label for="input-checkbox-form-meeting-edit" class="checkbox-inline">Zasadnutie</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +248,7 @@
                         <div class="form-group">
                             <label for="input-checkboxes-edit">Viditeľnosť</label>
                             <div class="form-group" id="input-checkboxes5-edit">
-                                <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-edit-visibility-special"><label for="input-checkbox-edit-visibility-special" class="checkbox-inline">Špeciálna udalosť</label></div>
+                                <!--<div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-edit-visibility-special"><label for="input-checkbox-edit-visibility-special" class="checkbox-inline">Špeciálna udalosť</label></div>-->
                                 <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-checkbox-edit-visibility-public"><label for="input-checkbox-edit-visibility-public" class="checkbox-inline">Verejné</label></div>
                             </div>
                         </div>
@@ -261,6 +267,7 @@
         <div id="sidebar" class="tasr-navbar">
             <img src="assets/logo.png" class="sidebar-logo-admin"/>
             <button type="button" class="btn btn-lg btn-sidebar-admin" style="float: right;" data-toggle="modal" data-target="#add-new-event">Nová udalosť</button>
+            <button type="button" class="btn btn-lg btn-sidebar-admin" style="float: right;" onclick="toPublicLink();">Verejná časť</button>
         </div>
         <div class="admin-main">
             <div class="jumbotron main-jumbotron" id="main-jumbotron"></div>

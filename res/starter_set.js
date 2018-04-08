@@ -13,6 +13,7 @@ let default_weeks = 5;
 let default_months = 3;
 let deleting_event = null;
 let editing_event = null;
+let dates_active = 1;
 
 function startPage() {
     let $main = $("#main-jumbotron");

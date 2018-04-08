@@ -132,6 +132,13 @@ class Event {
         this.tags2 = data.tags2;
         this.tags3 = data.tags3;
         this.tags4 = data.tags4;
+        this.deleted = false;
+        this.edited = false;
+        this.added = false;
+        this.added_date = data.added;
+        this.edited_date = data.edited;
+        this.deleted_date = data.deleted;
+        this.recalculateDates();
 
         if (typeof data.special === "string") {
             if (data.special === "0") this.special = false;
@@ -187,6 +194,22 @@ class Event {
             });
             if (non_html) result = result.substring(0, result.length - 2);
         }
+        return result;
+    }
+
+    recalculateDates() {
+        let d = new Date();
+        if (this.added_date) this.added = parseInt(this.added_date.split("-")[0]) === d.getFullYear() && parseInt(this.added_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.added_date.split(" ")[0].split("-")[2]) === d.getDate();
+        if (this.edited_date) this.edited = parseInt(this.edited_date.split("-")[0]) === d.getFullYear() && parseInt(this.edited_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.edited_date.split(" ")[0].split("-")[2]) === d.getDate();
+        if (this.deleted_date) this.deleted = parseInt(this.deleted_date.split("-")[0]) === d.getFullYear() && parseInt(this.deleted_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.deleted_date.split(" ")[0].split("-")[2]) === d.getDate();
+    }
+
+    htmlTodayEvent() {
+        let result = '';
+        this.recalculateDates();
+        if (this.added) {result = '<span class="event-added"> Pridané dnes! </span>';}
+        if (this.edited) {result = '<span class="event-edited"> Zmenené dnes! </span>';}
+        if (this.deleted) {result = '<span class="event-deleted"> Zrušené dnes! </span>';}
         return result;
     }
 }

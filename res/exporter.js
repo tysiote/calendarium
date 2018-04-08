@@ -29,11 +29,11 @@ function exportMainPressed(content) {
     $(".daily-event-title").each(function(i, v){page_header = "Export dňa " + $(v).html().substring(15, $(v).html().length);});
     $("#export-preview-header").html(page_header);
 
-    let result = '<table class="table"><thead><tr>';
+    let result = '<div id="exporting-table"><table class="table table-striped"><thead><tr>';
     if (viewing_mode !== "day") result += '<th>Deň</th>';
     result += '<th>Čas</th><th>Udalosť</th>' + content_th + '<th>Spôsob</th></tr></thead><tbody>';
     selected.forEach(function(r) {result += exportOneRow(parseInt(r.prop("id").split("-")[2]), content, viewing_mode !== "day");});
-    result += '</tbody></table>';
+    result += '</tbody></table></div>';
     $("#export-preview-body").html(result);
     $("#export-preview").modal('show');
 }
@@ -92,4 +92,19 @@ function fnExcelReport(tab_text) {
     element.click();
 
     document.body.removeChild(element);
+}
+
+function printData(id) {
+    let divToPrint = $("#" + id).html();
+    let htmlToPrint = '';
+    $.when($.get("bootstrap/css/bootstrap.min.css")).done(function(response) {
+        // console.log(response);
+        htmlToPrint = '<style type="text/css">' + response + '</style>' + divToPrint;
+    });
+    setTimeout(function() {
+        let newWin= window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+    }, 500);
 }

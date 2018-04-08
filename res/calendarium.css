@@ -1,5 +1,5 @@
 body {
-    background-color: #eeeeee;
+    background-color: #014f95;
 }
 
 .error-msg {
@@ -90,7 +90,7 @@ body {
     padding-left: 0 !important;
     padding-right: 0 !important;
     border: 0;
-    border-top: 1px solid #dddddd;
+    /*border-top: 1px solid #dddddd;*/
     width: 100%;
     text-align: left;
     background-color: inherit;
@@ -131,7 +131,7 @@ body {
 
 .sidebar {
     background-color: #014f95;
-    position: absolute;
+    position: relative;
     left: 0;
     width: 250px;
     top: 0;
@@ -142,7 +142,7 @@ body {
     margin-top: 50px;
     margin-left: 50px;
     margin-right: 50px;
-    background-color: #eeeeee;
+    background-color: #ffffff;
     border: 2px solid #0063b3;
     border-radius: 5px;
 }
@@ -371,4 +371,32 @@ body {
     border: none;
     padding: 0;
     margin-top: -5px;
+}
+
+.event-deleted {
+    color: darkred;
+}
+
+.event-edited {
+    color: dodgerblue;
+}
+
+.event-added {
+    color: forestgreen;
+}
+
+.dates-options {
+    margin-top: 20px;
+}
+
+.btn-date-option {
+    margin-right: 5px;
+}
+
+.stripped-custom-row-1 {
+    background-color: #f2f2f2;
+}
+
+.stripped-custom-row-0 {
+    background-color: #fff;
 }

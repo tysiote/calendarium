@@ -49,6 +49,7 @@ function openFilters() {
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-type-form-congress"><label for="input-checkbox2-type-form-congress" class="checkbox-inline">Snem</label></div>' +
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-type-form-festival"><label for="input-checkbox2-type-form-festival" class="checkbox-inline">Festival</label></div>' +
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-type-form-event"><label for="input-checkbox2-type-form-event" class="checkbox-inline">Podujatie</label></div>' +
+                        '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-type-form-meeting"><label for="input-checkbox2-type-form-meeting" class="checkbox-inline">Zasadnutie</label></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +

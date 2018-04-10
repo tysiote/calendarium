@@ -20,6 +20,8 @@ function openFilters() {
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-culture"><label for="input-checkbox2-culture" class="checkbox-inline">Kultúra</label></div>' +
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-local"><label for="input-checkbox2-local" class="checkbox-inline">Samospráva</label></div>' +
                         '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-anniversary"><label for="input-checkbox2-anniversary" class="checkbox-inline">Výročie</label></div>' +
+                        '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-health"><label for="input-checkbox2-health" class="checkbox-inline">Zdravie</label></div>' +
+                        '<div class="checkbox checkbox-primary"><input type="checkbox" class="dummy-selector-class-checkbox2" value="" id="input-checkbox2-school"><label for="input-checkbox2-school" class="checkbox-inline">Školstvo</label></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +

@@ -89,47 +89,8 @@ function loadSelectedDates(d, m, y, wd, parent, bulk) {
 }
 
 function populateOneEvent(e, day, odd) {
-    let deleted = false;
-    let added = false;
-    let edited = false;
     let odd_class = " stripped-custom-row-0 ";
     if (odd) odd_class = " stripped-custom-row-1 ";
-    if (e.deleted) {
-        if (viewing_mode === "day") {
-            let datetime = $('#main-datepicker').data("DateTimePicker").viewDate()._d.toString();
-            let m = parseMonth(datetime.split(" ")[1]);
-            let d = parseInt(datetime.split(" ")[2]);
-            let y = parseInt(datetime.split(" ")[3]);
-            let new_date = new Date();
-            console.log(new_date.getDate() !== d, new_date.getMonth()+1 !== m, new_date.getFullYear() !== y);
-            if (new_date.getDate() !== d || new_date.getMonth()+1 !== m || new_date.getFullYear() !== y) return "";
-            deleted = true;
-        } else return "";
-    }
-    if (e.added) {
-        if (viewing_mode === "day") {
-            let datetime = $('#main-datepicker').data("DateTimePicker").viewDate()._d.toString();
-            let m = parseMonth(datetime.split(" ")[1]);
-            let d = parseInt(datetime.split(" ")[2]);
-            let y = parseInt(datetime.split(" ")[3]);
-            let new_date = new Date();
-            console.log(new_date.getDate() !== d, new_date.getMonth()+1 !== m, new_date.getFullYear() !== y);
-            if (new_date.getDate() !== d || new_date.getMonth()+1 !== m || new_date.getFullYear() !== y) return "";
-            added = true;
-        } else return "";
-    }
-    if (e.edited) {
-        if (viewing_mode === "day") {
-            let datetime = $('#main-datepicker').data("DateTimePicker").viewDate()._d.toString();
-            let m = parseMonth(datetime.split(" ")[1]);
-            let d = parseInt(datetime.split(" ")[2]);
-            let y = parseInt(datetime.split(" ")[3]);
-            let new_date = new Date();
-            console.log(new_date.getDate() !== d, new_date.getMonth()+1 !== m, new_date.getFullYear() !== y);
-            if (new_date.getDate() !== d || new_date.getMonth()+1 !== m || new_date.getFullYear() !== y) return "";
-            edited = true;
-        } else return "";
-    }
     let checkbox_exporting = '';
     if (exporting) {
         checkbox_exporting = '' +
@@ -142,10 +103,6 @@ function populateOneEvent(e, day, odd) {
     let html_date = '';
     if (day) html_date = e.htmlStartDate() + " ";
     let title_class = "event-title";
-    if (e.special) title_class += " special-event";
-    // if (added) title_class += " event-added";
-    // if (edited) title_class += " event-edited";
-    // if (deleted) title_class += " event-deleted";
     result += '' +
             '<div class="row custom-row ' + odd_class + '" id="cal-row-' + e.id + '">' +
                 '<div class="col-lg-9 col-md-9 col-sm-9 custom-col">' +
@@ -189,7 +146,7 @@ function moreDates(inc) {
         dates_active += inc;
         if (dates_active === 0) dates_active = 1;
         if (dates_active === 1) {
-            $controls.html('<button type="button" class="btn btn-success" onclick="moreDates(1);">Pridajte deň</button>');
+            $controls.html('<button type="button" class="btn btn-primary" onclick="moreDates(1);">Pridajte deň</button>');
         }
     }
     for (let i = 1; i < dates_active; i++) {
@@ -202,4 +159,13 @@ function moreDates(inc) {
         $(function () {$('#datetimepicker' + (i + 1)).datetimepicker({locale: 'sk', format: 'LLLL'});});
         if (old_values[i]) $("#input-date-" + (i + 1)).val(old_values[i]);
     }
+}
+
+function addNewEventModalShow() {
+    let $modal = $("#add-new-event");
+    $("input").each(function(i, v) {
+        $(v).val("");
+        $(v).prop("checked", false);
+    });
+    $modal.modal('show');
 }

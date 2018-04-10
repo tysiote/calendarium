@@ -96,6 +96,8 @@ function translateTag(tag) {
     if (tag === "culture") return "Kultúra";
     if (tag === "area") return "Samospráva";
     if (tag === "anniversary") return "Výročie";
+    if (tag === "health") return "Zdravie";
+    if (tag === "school") return "Školstvo";
 
     if (tag === "press") return "Tl. beseda";
     if (tag === "briefing") return "Brífing";
@@ -127,6 +129,8 @@ function addEventClicked(edit) {
         culture: $("#input-checkbox-culture" + edit).is(":checked"),
         local: $("#input-checkbox-local" + edit).is(":checked"),
         anniversary: $("#input-checkbox-anniversary" + edit).is(":checked"),
+        health: $("#input-checkbox-health" + edit).is(":checked"),
+        school: $("#input-checkbox-school" + edit).is(":checked"),
     };
     let tags2 = {
         text: $("#input-checkbox-tag-text" + edit).is(":checked"),

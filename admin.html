@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="calendarium">
+    <meta name="author" content="martinusmaco">
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/moment.min.js"></script>
+    <script src="bootstrap/js/transition.js"></script>
+    <script src="bootstrap/js/collapse.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js" rel="stylesheet"></script>
+    <script src="bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="bootstrap/js/bootstrap-toggle.min.js"></script>
+    <script src="bootstrap/js/jspdf.min.js"></script>
+    <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="bootstrap/js/i18n/defaults-sk_SK.js"></script>
+    <script src="bootstrap/js/underscore-min.js"></script>
+    <script src="bootstrap/js/cryptojs/core-min.js"></script>
+    <script src="bootstrap/js/cryptojs/md5-min.js"></script>
+
+    <script src="res/admin.js"></script>
+
+    <link href="res/admin.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="res/checkboxes.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!--<link href="res/calendarium.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="bootstrap/css/bootsnipp-toggle-switch.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-search.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-select-min.css">
+    <title>TASR Admin</title>
+</head>
+<body>
+<div id="admin-screen" class="container">
+    <div id="admin-pre-loading">
+        <div class="jumbotron">
+            <span id="login-wait">Pracujem <i class="fa fa-refresh fa-spin" style="font-size:24px"></i></span>
+        </div>
+    </div>
+    <div id="admin-other" class="jumbotron">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12"><h3>Správa používateľov kalendária</h3></div>
+            <div class="col-lg-4 col-md-4 col-sm-12"><button type="button" class="btn btn-primary btn-add" onclick="addNewUserPressed()">Pridať používateľa</button></div>
+        </div>
+        <div id="admin-users"></div>
+    </div>
+    <div id="admin-reset-password" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reset hesla</h4>
+                </div>
+                <div class="modal-body" id="admin-reset-password-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-danger" id="btn-modal-reset" onclick="resetPassword();">Resetovať</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="admin-remove-user" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Zmazanie účtu</h4>
+                </div>
+                <div class="modal-body" id="admin-remove-user-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-danger" id="btn-modal-remove" onclick="removeUser();">Zmazať</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="admin-change-user" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Zmena práv</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="admin-change-user-body"></div>
+                    <select class="form-control" id="admin-change-user-select">
+                        <option class="form-control" value="0">Používateľ</option>
+                        <option class="form-control" value="1">Správca</option>
+                        <option class="form-control" value="2">Administrátor</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-primary" id="btn-modal-change" onclick="changeUser();">Potvrdiť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="admin-add-user" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Pridanie používateľa</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="admin-add-user-nickname">Používateľ</label>
+                            <input type="text" class="form-control" id="admin-add-user-nickname" placeholder="Používateľ">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-add-user-name">Meno</label>
+                            <input type="text" class="form-control" id="admin-add-user-name" placeholder="Meno">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-add-user-select">Práva</label>
+                            <select class="form-control" id="admin-add-user-select">
+                                <option class="form-control" value="0">Používateľ</option>
+                                <option class="form-control" value="1">Správca</option>
+                                <option class="form-control" value="2">Administrátor</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div id="admin-add-user-body"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-primary" id="btn-modal-add" onclick="addUser();">Potvrdiť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>$(document).ready(function() {adminStart();})</script>
+</body>
+</html>

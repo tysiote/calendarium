@@ -8,14 +8,6 @@ function connectDatabase() {
     $password = "mvabived";
     $database = "rs017101db";
     $con = mysqli_connect($host, $user, $password, $database);
-    if (!$con) {
-        $host = "135.76.168.165";
-        $user = "mm321a";
-        $password = "vPVcmHHwpXa8Asdf";
-        $database = "mm321a";
-//        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        $con = mysqli_connect($host, $user, $password, $database);
-    }
     return $con;
 }
 

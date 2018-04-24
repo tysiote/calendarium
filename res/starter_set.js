@@ -118,6 +118,6 @@ function populateEditInputs() {
     else $("#input-content-edit").val("");
     if (e.title && e.title.length) $("#input-title-edit").val(e.title);
     let d = e.start_time;
-    $("#datetimepicker1-edit").data("DateTimePicker").date(new Date(d.year, d.month, d.day, d.hour, d.minute));
+    $("#datetimepicker1-edit").data("DateTimePicker").date(new Date(d.year, d.month - 1, d.day, d.hour, d.minute));
 
 }

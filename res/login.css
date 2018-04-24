@@ -1,0 +1,43 @@
+#login-main {
+    background-color: #ededed;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+#login-screen {
+    /*margin-top: 10%;*/
+}
+
+#login-btn {
+    width: 100%;
+}
+
+#login-row {
+    margin-top: 10%;
+}
+#login-info-msg {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+#login-wait {
+    font-size: 20px;
+}
+
+.login-info-msg-danger {
+    color: darkred;
+}
+
+h2 {
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+}
+
+body {
+    background: linear-gradient(#9cbad6, white);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    height: 100%;
+    width: 100%;
+}

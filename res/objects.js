@@ -128,6 +128,8 @@ class Event {
         this.content = data.content;
         this.content = this.content.replace(/\\r\\n/g, "<br>");
         this.content = this.content.replace(/\\n/g, "<br>");
+        this.content = customReplace(this.content, " ", "&nbsp;");
+        this.content = customReplace(this.content, "\n", "<br>");
         this.tags1 = data.tags1;
         this.tags2 = data.tags2;
         this.tags3 = data.tags3;

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="calendarium">
+    <meta name="author" content="martinusmaco">
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/calendarium.css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="exportThis();">EXPORT</button>
+<div style="background-color: #EEEEEE">
+    <div class="modal-body" id="export-preview-body"><div id="exporting-table"><table class="table table-striped"><thead><tr><th>Čas</th><th>Udalosť</th><th>Popis</th><th>Spôsob</th></tr></thead><tbody><tr><td>0:00</td><td>          Turčianske javisko 2018</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Krajská&nbsp;postupová&nbsp;súťaž&nbsp;a&nbsp;prehliadka&nbsp;amatérskeho&nbsp;divadla<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dospelých&nbsp;a&nbsp;divadla&nbsp;mladých&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(19.&nbsp;-&nbsp;21.&nbsp;apríl)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slovenské&nbsp;komorné&nbsp;divadlo,&nbsp;Národný&nbsp;dom&nbsp;v&nbsp;Martine<br></td><td></td></tr><tr><td>8:00</td><td>           Bratislavská burza kníh</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Podujatie&nbsp;potrvá&nbsp;do&nbsp;25.&nbsp;apríla.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mestská&nbsp;knižnica,&nbsp;Pod&nbsp;knižnicou,&nbsp;Klariská&nbsp;16&nbsp;&nbsp;v&nbsp;Bratislave<br></td><td></td></tr><tr><td>9:00</td><td>           Medzinárodná spevácka súťaž Rudolfa Petráka</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(19.&nbsp;-&nbsp;22.&nbsp;apríla)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;konzervatórium,&nbsp;koncertná&nbsp;sála&nbsp;Ladislava&nbsp;Árvaya&nbsp;v&nbsp;Žiline<br></td><td>Text, Video, Zvuk</td></tr><tr><td>16:00</td><td>          Až naprší až uschne </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vernisáž&nbsp;výstavy.&nbsp;Podujatie&nbsp;potrvá&nbsp;do&nbsp;2.septembra.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bibiana,&nbsp;Panská&nbsp;41&nbsp;v&nbsp;Bratislave&nbsp;<br>&nbsp;<br></td><td></td></tr><tr><td>16:30</td><td>           Bez nich by to nešlo</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vernisáž&nbsp;fotografickej&nbsp;výstavy,&nbsp;ktorá&nbsp;prezentuje&nbsp;fotografie&nbsp;Miroslava&nbsp;Pokorného&nbsp;st.&nbsp;a&nbsp;ml.&nbsp;a&nbsp;ukazuje&nbsp;rôzne&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typy&nbsp;fekálnych&nbsp;vozidiel.Výstava&nbsp;potrvá&nbsp;do&nbsp;30.&nbsp;októbra.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STM&nbsp;-&nbsp;Múzeum&nbsp;dopravy,&nbsp;perón,&nbsp;Šancová&nbsp;1/A&nbsp;v&nbsp;Bratislave&nbsp;&nbsp;<br><br></td><td></td></tr><tr><td>16:30</td><td>          Zo života bocianov.</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otvorenie&nbsp;výstavy&nbsp;fotografií&nbsp;profesora&nbsp;Štefana&nbsp;Vilčeka.&nbsp;Výstava&nbsp;potrvá&nbsp;do&nbsp;22.&nbsp;mája.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Verejná&nbsp;knižnica&nbsp;Jána&nbsp;Bocatia,&nbsp;centrálna&nbsp;požičovňa,&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hviezdoslavova&nbsp;5&nbsp;v&nbsp;Košiciach&nbsp;&nbsp;<br></td><td></td></tr><tr><td>17:00</td><td>          História bez bodky</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Voľný&nbsp;cyklus&nbsp;stretnutí&nbsp;Stredoeurópskeho&nbsp;domu&nbsp;fotografie&nbsp;v&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spolupráci&nbsp;s&nbsp;Artforumom.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stredoeurópsky&nbsp;dom&nbsp;fotografie,&nbsp;Prepoštská&nbsp;4&nbsp;v&nbsp;Bratislave&nbsp;<br></td><td></td></tr><tr><td>17:30</td><td>          Stephen Hawking</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prednáška&nbsp;Vladimíra&nbsp;Baleka&nbsp;z&nbsp;Katedry&nbsp;teoretickej&nbsp;fyziky&nbsp;a&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;didaktiky&nbsp;fyziky,&nbsp;Fakulty&nbsp;matematiky,&nbsp;fyziky&nbsp;a&nbsp;informatiky,&nbsp;UK&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zimná&nbsp;záhrada&nbsp;Slovenského&nbsp;národného&nbsp;múzea,&nbsp;Prírodovedné&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;múzeum&nbsp;v&nbsp;Bratislave<br></td><td></td></tr><tr><td>17:30</td><td>           Mladí architekti vo Francúzsku a na Slovensku</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vernisáž&nbsp;výstavy..<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Galéria&nbsp;Francúzskeho&nbsp;inštitútu,&nbsp;Sedlárska&nbsp;7&nbsp;v&nbsp;Bratislave<br><br></td><td></td></tr><tr><td>17:35</td><td>ssssss</td><td>Bratislava&nbsp;23.&nbsp;marca&nbsp;(TASR)&nbsp;-&nbsp;Od&nbsp;26.&nbsp;marca&nbsp;stanovujú&nbsp;vybrané&nbsp;slovenské&nbsp;banky&nbsp;kurz&nbsp;českej&nbsp;koruny&nbsp;nasledovne:
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;
+        <br>-------------------------------------------------------------------
+        <br>&nbsp;Banka&nbsp;-&nbsp;názov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nákup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;predaj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stred
+        <br>-------------------------------------------------------------------
+        <br>
+        <br>Prvá&nbsp;komunálna&nbsp;banka,&nbsp;a.&nbsp;s.,
+        <br>&nbsp;Žilina&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,267
+        <br>
+        <br>Ľudová&nbsp;banka,&nbsp;a.s.,
+        <br>&nbsp;Bratislava&nbsp;(*)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,29&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,267
+        <br>
+        <br>Istrobanka,&nbsp;a.&nbsp;s.,&nbsp;
+        <br>&nbsp;Bratislava&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,270
+        <br>
+        <br>Poštová&nbsp;banka,&nbsp;a.&nbsp;s.,
+        <br>&nbsp;Bratislava&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,270
+        <br>
+        <br>Všeobecná&nbsp;úverová&nbsp;banka,&nbsp;a.s.,
+        <br>&nbsp;Bratislava&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,267
+        <br>--------------------------------------------------------------------
+        <br>(*)&nbsp;Ľudová&nbsp;banka&nbsp;si&nbsp;vyhradzuje&nbsp;právo&nbsp;na&nbsp;zmeny&nbsp;kurzového&nbsp;lístka&nbsp;v
+        <br>priebehu&nbsp;dňa.
+        <br></td><td>Text, Video, Zvuk</td></tr><tr><td>18:00</td><td>          Koncert židovskej hudby Mojše Band</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;koncert&nbsp;pri&nbsp;príležitosti&nbsp;75.&nbsp;výročia&nbsp;vypuknutia&nbsp;Povstania&nbsp;vo&nbsp;Varšavskom&nbsp;gete.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Poľský&nbsp;inštitút,&nbsp;Námestie&nbsp;SNP&nbsp;27&nbsp;v&nbsp;Bratislave<br></td><td></td></tr><tr><td>19:00</td><td>          Uvedenie debutovej knihy Tomáša Hučka</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uvedenie&nbsp;debutovej&nbsp;knihy&nbsp;Chaconna,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fuga,&nbsp;Námestie&nbsp;SNP&nbsp;24&nbsp;v&nbsp;Bratislave<br></td><td></td></tr><tr><td>19:00</td><td>          Hudba prvej republiky</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Koncert&nbsp;pri&nbsp;príležitosti&nbsp;100.&nbsp;výročia&nbsp;vzniku&nbsp;prvej&nbsp;Československej&nbsp;republiky<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kultúrny&nbsp;dom&nbsp;v&nbsp;Novákoch<br><br></td><td></td></tr><tr><td>19:00</td><td>           Otvárací koncert 63. Košickej hudobnej jari </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otvorenie&nbsp;tradičného&nbsp;hudobného&nbsp;poduajtia&nbsp;(19.&nbsp;apríla&nbsp;-&nbsp;17.&nbsp;mája)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dom&nbsp;umenia,&nbsp;Moyzesova&nbsp;66&nbsp;v&nbsp;Košiciach&nbsp;<br>&nbsp;<br><br></td><td></td></tr></tbody></table></div></div>
+</div>
+<script>
+    function customReplace(s1, s2, s3) {
+        while (s1.indexOf(s2) !== -1) {
+            s1 = s1.replace(s2, s3);
+        }
+        return s1;
+    }
+
+    function exportThis() {
+        var text = $("#export-preview-body").html();
+        text = customReplace(text, "<table>", "");
+        text = customReplace(text, "</table>", "");
+        text = customReplace(text, "<thead>", "");
+        text = customReplace(text, "</thead>", "");
+        text = customReplace(text, "<tbody>", "");
+        text = customReplace(text, "</tbody>", "");
+        text = customReplace(text, "<th>", "");
+        text = customReplace(text, "</th>", "&nbsp;&nbsp;&nbsp;&nbsp;");
+        text = customReplace(text, "<td>", "");
+        text = customReplace(text, "</td>", "&nbsp;&nbsp;&nbsp;&nbsp;");
+        text = customReplace(text, "<tr>", "");
+        text = customReplace(text, "</tr>", "<br>");
+        var winPrint = window.open('', '', 'left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0');
+        winPrint.document.write('<title>Print  Report</title><div style="font-family: Courier">' + text + '</div>');
+        winPrint.document.close();
+    }
+</script>
+</body>
+</html>

@@ -26,3 +26,20 @@ body {
     margin-top: 20px;
     float: right;
 }
+
+.sort-btn {
+    background-color: inherit;
+    border: none;
+}
+
+.sort-active {
+    color: deepskyblue;
+}
+
+.search-user-div {
+    margin-top: 20px;
+}
+
+.search-user-input {
+    height: 33px;
+}

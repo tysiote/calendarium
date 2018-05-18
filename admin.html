@@ -45,7 +45,12 @@
     <div id="admin-other" class="jumbotron">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12"><h3>Správa používateľov kalendária</h3></div>
-            <div class="col-lg-4 col-md-4 col-sm-12"><button type="button" class="btn btn-primary btn-add" onclick="addNewUserPressed()">Pridať používateľa</button></div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <button type="button" class="btn btn-primary btn-add" onclick="addNewUserPressed()">Pridať používateľa</button>
+                <div class="search-user-div">
+                    <input type="text" class="search-user-input" id="search-input" placeholder="Hľadaj používateľa" name="search">
+                </div>
+            </div>
         </div>
         <div id="admin-users"></div>
     </div>
@@ -59,7 +64,7 @@
                 <div class="modal-body" id="admin-reset-password-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
-                    <button type="button" class="btn btn-danger" id="btn-modal-reset" onclick="resetPassword();">Resetovať</button>
+                    <button type="button" class="btn btn-danger" id="btn-modal-reset" onclick="resetPassword();">Potvrdiť</button>
                 </div>
             </div>
         </div>
@@ -89,9 +94,10 @@
                 <div class="modal-body">
                     <div id="admin-change-user-body"></div>
                     <select class="form-control" id="admin-change-user-select">
-                        <option class="form-control" value="0">Používateľ</option>
-                        <option class="form-control" value="1">Správca</option>
-                        <option class="form-control" value="2">Administrátor</option>
+                        <option class="form-control" value="1">Používateľ</option>
+                        <option class="form-control" value="2">TASR Používateľ</option>
+                        <option class="form-control" value="3">Správca</option>
+                        <option class="form-control" value="4">Administrátor</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -121,11 +127,28 @@
                         <div class="form-group">
                             <label for="admin-add-user-select">Práva</label>
                             <select class="form-control" id="admin-add-user-select">
-                                <option class="form-control" value="0">Používateľ</option>
-                                <option class="form-control" value="1">Správca</option>
-                                <option class="form-control" value="2">Administrátor</option>
+                                <option class="form-control" value="1">Používateľ</option>
+                                <option class="form-control" value="2">TASR Používateľ</option>
+                                <option class="form-control" value="3">Správca</option>
+                                <option class="form-control" value="4">Administrátor</option>
                             </select>
                         </div>
+                        <fieldset class="form-group">
+                            <label>Heslo</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="password-radios" id="password-add-radios-1" value="option1" onclick="manualPasswordChanged('add');">
+                                    Vygenerovať heslo
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="password-radios" id="password-add-radios-2" value="option2" onclick="manualPasswordChanged('add');" checked>
+                                    Zadať heslo manuálne
+                                </label>
+                            </div>
+                            <input type="text" class="form-control" id="admin-add-user-password" placeholder="Heslo">
+                        </fieldset>
                     </form>
                     <div id="admin-add-user-body"></div>
                 </div>

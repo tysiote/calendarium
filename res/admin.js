@@ -1,7 +1,18 @@
 let users = [];
+let filtered_users = [];
 let resetting = '';
 let removing = '';
 let changing = '';
+let sorting = 'nickname-0';
+
+function prepareUsers(data) {
+    data.forEach(function(u) {
+        u["svk_nickname"] = svkToEng(u.nickname);
+        u["svk_name"] = svkToEng(u.name);
+    });
+    users = data;
+    filtered_users = data;
+}
 
 function adminStart() {
     resizeWindow();
@@ -10,14 +21,17 @@ function adminStart() {
         resizeWindow();
     });
     checkConnect().then(function(res) {
-        if (res.status === "success" && !res.error) {
-            if (res.usertype === 2 || res.usertype === "2") {
+        res = JSON.parse(res);
+        console.log(res);
+        if (res.status.code === 11) {
+            if (res.level === 4) {
                 fetchUsers().then(function(res) {
-                    if (!res.error) adminStartMain(res.data);
-                    else window.location.href = "login.html";
+                    res = JSON.parse(res);
+                    console.log(res);
+                    adminStartMain(res.data);
                 });
             } else {
-                window.location.href = "login.html";
+                window.location.href = "index.html";
             }
         } else {
             window.location.href = "login.html#admin";
@@ -26,17 +40,140 @@ function adminStart() {
 }
 
 function adminStartMain(data) {
-    users = data;
+    prepareUsers(data);
+    $("#search-input").on("change paste keyup",function() {refreshFilter();});
     $("#admin-users").html(fillUsers());
+    pre_check_sort();
     $("#admin-pre-loading").hide();
     $("#admin-other").show();
 }
 
+function sortButton(el) {
+    let recent = $(el).prop("id").split("-")[1];
+    let $el = $("#sort-" + recent + "-fa");
+    let last = sorting.split("-")[1];
+    ["nickname", "name", "rights"].forEach(function(id) {
+        let $temp_el = $("#sort-" + id + "-fa");
+        $temp_el.removeClass();
+        $temp_el.addClass("fa");
+        $temp_el.addClass("fa-sort-down");
+    });
+    $el.addClass("sort-active");
+    if (sorting.split("-")[0] === recent) {
+        if (last === "0") {
+            sorting = recent + "-1";
+            $el.removeClass("fa-sort-down");
+            $el.addClass("fa-sort-up");
+        } else {
+            sorting = recent + "-0";
+            $el.removeClass("fa-sort-up");
+            $el.addClass("fa-sort-down");
+        }
+    } else {
+        sorting = recent + "-0";
+    }
+    sort();
+}
+
+function sort() {
+    let key = sorting.split("-")[0];
+    let dir = sorting.split("-")[1];
+    if (key === "rights") key = "usertype";
+    if (key === "nickname") key = "svk_nickname";
+    if (key === "name") key = "svk_name";
+    filtered_users.sort(function(a, b) {
+        if (dir === "1") return a[key] < b[key];
+        return b[key] < a[key];
+    });
+    $("#admin-users").html(fillUsers());
+    pre_check_sort();
+}
+
+function refreshFilter() {
+    let $el = $("#search-input");
+    let search = svkToEng($el.val());
+    filtered_users = [];
+    if (search.length) {
+        users.forEach(function(u) {
+            if (u.svk_name.indexOf(search) !== -1) filtered_users.push(u);
+            if (u.svk_nickname.indexOf(search) !== -1 && filtered_users.indexOf(u) === -1) filtered_users.push(u);
+        });
+    } else {
+        filtered_users = users;
+    }
+    $("#admin-users").html(fillUsers());
+    pre_check_sort();
+}
+
+function customReplace(s1, s2, s3) {
+    while (s1.indexOf(s2) !== -1) {
+        s1 = s1.replace(s2, s3);
+    }
+    return s1;
+}
+
+function svkToEng(input) {
+    let letters = [
+        ["á", "a"],
+        ["ä", "a"],
+        ["č", "c"],
+        ["ď", "d"],
+        ["é", "e"],
+        ["ě", "e"],
+        ["í", "i"],
+        ["ľ", "l"],
+        ["ĺ", "l"],
+        ["ň", "n"],
+        ["ó", "o"],
+        ["ô", "o"],
+        ["ö", "o"],
+        ["ř", "r"],
+        ["ŕ", "r"],
+        ["š", "s"],
+        ["ť", "t"],
+        ["ú", "u"],
+        ["ü", "u"],
+        ["ý", "y"],
+        ["ž", "z"]
+    ];
+    letters.forEach(function(v) {
+        input = customReplace(input, v[0], v[1]);
+        input = customReplace(input, v[0].toUpperCase(), v[1]);
+    });
+    input = input.toLowerCase();
+    return input;
+}
+
 function fillUsers() {
-    let result = '<table class="table table-striped"><thead><tr><th>Používateľ</th><th>Meno</th><th>Práva</th><th>Operácie</th></tr></thead><tbody>';
-    users.forEach(function(u) {result += fillOneUser(u);});
+    let result = '' +
+        '<table class="table table-striped">' +
+            '<thead>' +
+                '<tr>' +
+                    '<th>Používateľ<button class="sort-btn" id="sort-nickname" onclick="sortButton(this);"><span id="sort-nickname-fa" class="fa fa-sort-down"></span></button></th>' +
+                    '<th>Meno<button class="sort-btn" id="sort-name" onclick="sortButton(this);"><span id="sort-name-fa" class="fa fa-sort-down"></span></button></th>' +
+                    '<th>Práva<button class="sort-btn" id="sort-rights" onclick="sortButton(this);"><span id="sort-rights-fa" class="fa fa-sort-down"></span></button></th>' +
+                    '<th>Operácie</th>' +
+                '</tr>' +
+            '</thead>' +
+        '<tbody>';
+    filtered_users.forEach(function(u) {result += fillOneUser(u);});
     result += '</tbody></table>';
     return result;
+}
+
+function pre_check_sort() {
+    ["nickname", "name", "rights"].forEach(function(id) {
+        let $temp_el = $("#sort-" + id + "-fa");
+        $temp_el.removeClass();
+        $temp_el.addClass("fa");
+        $temp_el.addClass("fa-sort-down");
+    });
+    let $el = $("#sort-" + sorting.split("-")[0] + "-fa");
+    $el.addClass("sort-active");
+    if (sorting.split("-")[1] === "1") {
+        $el.removeClass("fa-sort-down");
+        $el.addClass("fa-sort-up");
+    }
 }
 
 function fillOneUser(u) {
@@ -47,7 +184,7 @@ function fillOneUser(u) {
             '<td>' + u.name + '</td>' +
             '<td>' + translateUsertype(u.usertype) + '</td>' +
             '<td>' +
-                '<button type="button" class="btn btn-default btn-manage" onclick="resetPressed(\'' + u.nickname + '\');">Reset hesla</button>' +
+                '<button type="button" class="btn btn-default btn-manage" onclick="resetPressed(\'' + u.nickname + '\');">Zmena hesla</button>' +
                 '<button type="button" class="btn btn-info btn-manage" onclick="userTypePressed(\'' + u.nickname + '\');">Zmena práv</button>' +
                 '<button type="button" class="btn btn-danger btn-manage" onclick="removePressed(\'' + u.nickname + '\');">Zmazanie účtu</button>' +
             '</td>' +
@@ -56,9 +193,10 @@ function fillOneUser(u) {
 }
 
 function translateUsertype(i) {
-    if (i === 2 || i === "2") return "Administrátor";
-    if (i === 1 || i === "1") return "Správca";
-    if (i === 0 || i === "0") return "Používateľ";
+    if (i === 4 || i === "4") return "Administrátor";
+    if (i === 3 || i === "3") return "Správca";
+    if (i === 2 || i === "2") return "TASR Používateľ";
+    if (i === 1 || i === "1") return "Používateľ";
     return "Nerozpoznané";
 }
 
@@ -67,34 +205,14 @@ function resizeWindow() {
 }
 
 function checkConnect() {
-    return $.post({
-        url: "res/core.php",
-        data: {"check_connect": true},
-        dataType: "json",
-        type: "POST",
-        success: function(msg) {
-            let res = {};
-            $.each(msg, function(i, v) {
-                res[i] = v;
-            });
-            return res;
-        }
+    return $.get("backend/session.php", {}, function(msg) {
+        return JSON.parse(msg);
     });
 }
 
 function fetchUsers() {
-    return $.post({
-        url: "res/core.php",
-        data: {"all_users": true},
-        dataType: "json",
-        type: "POST",
-        success: function(msg) {
-            let res = {};
-            $.each(msg, function(i, v) {
-                res[i] = v;
-            });
-            return res;
-        }
+    return $.post("backend/session.php", {action: "get_users"}, function(msg) {
+        return JSON.parse(msg);
     });
 }
 
@@ -113,10 +231,25 @@ function generatePassword() {
 }
 
 function resetPressed(id) {
-    let result = 'Naozaj chcete resetovať heslo pre ';
     let u = searchForUser(id);
-    result += u.name + '?';
     resetting = u.nickname;
+    let result = '<legend>Naozaj chcete zmeniť heslo pre používateľa ' + u.name + '?</legend>' +
+    '<fieldset class="form-group">' +
+        '<label>Heslo</label>' +
+        '<div class="form-check">' +
+            '<label class="form-check-label">' +
+                '<input type="radio" class="form-check-input" name="password-radios" id="password-edit-radios-1" value="option1" onclick="manualPasswordChanged(\'edit\');">' +
+                'Vygenerovať heslo' +
+            '</label>' +
+        '</div>' +
+        '<div class="form-check">' +
+            '<label class="form-check-label">' +
+                '<input type="radio" class="form-check-input" name="password-radios" id="password-edit-radios-2" value="option2" onclick="manualPasswordChanged(\'edit\');" checked>' +
+                'Zadať heslo manuálne' +
+            '</label>' +
+        '</div>' +
+        '<input type="text" class="form-control" id="admin-edit-user-password" placeholder="Heslo">' +
+    '</fieldset>';
     $("#btn-modal-reset").show();
     $("#admin-reset-password-body").html(result);
     $("#admin-reset-password").modal("show");
@@ -155,19 +288,22 @@ function addNewUserPressed() {
 }
 
 function addUser() {
-    let nickname = $("#admin-add-user-nickname").val();
+    let nickname = svkToEng($("#admin-add-user-nickname").val());
     let name = $("#admin-add-user-name").val();
     let usertype = parseInt($("#admin-add-user-select").val());
-    let password = generatePassword();
-    let data = {new_user: true, nickname: nickname.toLowerCase(), name: name, usertype: usertype, password: password[1]};
+    let password = $("#admin-add-user-password").val();
+    if ($("#password-radios-1").prop("checked")) password = generatePassword();
+    else password = [password, CryptoJS.MD5(password).words[0]];
+    let data = {action: "add_user", data: {nickname: nickname, name: name, usertype: usertype, password: password[1]}};
     let result = '';
     let msg = $("#admin-add-user-body");
     let btn = $("#btn-modal-add");
     btn.prop("disabled", true);
     btn.html("Pracujem");
     sendPostRequest(data).then(function(res) {
+        res = JSON.parse(res);
         console.log(res);
-        if (res.error) result = "Používateľa sa nepodarilo pridať";
+        if (res.status.code !== 11) result = "Používateľa sa nepodarilo pridať";
         else {
             result = 'Používateľ bol pridaný.<br>Nové heslo je <br><span class="new-password">' + password[0] + '</span>';
             addToUsers(data);
@@ -180,17 +316,19 @@ function addUser() {
 }
 
 function resetPassword() {
-    let pswd = generatePassword();
-    let new_password = pswd[0];
-    let new_password_hash = pswd[1];
+    let password = $("#admin-edit-user-password").val();
+    if ($("#password-edit-radios-1").prop("checked")) password = generatePassword();
+    else password = [password, CryptoJS.MD5(password).words[0]];
+    let data = {action: "edit_user", data: {password: password[1], nickname: resetting}};
     let msg = $("#admin-reset-password-body");
     let result = '';
     let btn = $("#btn-modal-reset");
     btn.prop("disabled", true);
     btn.html("Pracujem");
-    sendPostRequest({new_password: new_password_hash, nickname: resetting}).then(function(res) {
-        if (res.error) result = "Na serveri nastala chyba";
-        else result = 'Heslo bolo úspešne zmenené.<br>Nové heslo je <br><span class="new-password">' + new_password + '</span>';
+    sendPostRequest(data).then(function(res) {
+        res = JSON.parse(res);
+        if (res.status.code !== 11) result = "Na serveri nastala chyba";
+        else result = 'Heslo bolo úspešne zmenené.<br>Nové heslo je <br><span class="new-password">' + password[0] + '</span>';
         msg.html(result);
         btn.prop("disabled", false);
         btn.html("Resetovať");
@@ -204,8 +342,9 @@ function removeUser() {
     btn.html("Pracujem");
     let msg = $("#admin-remove-user-body");
     let result = '';
-    sendPostRequest({remove_user: removing}).then(function(res) {
-        if (res.error) result = 'Na serveri nastala chyba';
+    sendPostRequest({action: "delete_user", data: {nickname: removing}}).then(function(res) {
+        res = JSON.parse(res);
+        if (res.status.code !== 11) result = 'Na serveri nastala chyba';
         else {
             result = 'Používateľ bol zmazaný';
             removeFromUsers(removing);
@@ -224,8 +363,9 @@ function changeUser() {
     btn.html("Pracujem");
     let msg = $("#admin-change-user-body");
     let result = '';
-    sendPostRequest({change_user: changing, new_value: parseInt(val)}).then(function(res) {
-        if (res.error) result = 'Na serveri nastala chyba';
+    sendPostRequest({action: "edit_user", data: {usertype: parseInt(val), nickname: changing}}).then(function(res) {
+        res = JSON.parse(res);
+        if (res.status.code !== 11) result = 'Na serveri nastala chyba';
         else {
             result = 'Práva používateľa boli zmenené';
             changeUserRefresh(changing, val);
@@ -244,7 +384,7 @@ function removeFromUsers(user_id) {
     adminStartMain(temp);
 }
 
-function addToUsers(data) {
+function addToUsers() {
     adminStart();
 }
 
@@ -264,17 +404,12 @@ function changeUserRefresh(user_id, usertype) {
 
 function sendPostRequest(data) {
     console.log(data);
-    return $.post({
-        url: "res/core.php",
-        data: data,
-        dataType: "json",
-        type: "POST",
-        success: function(msg) {
-            let res = {};
-            $.each(msg, function(i, v) {
-                res[i] = v;
-            });
-            return res;
-        }
+    return $.post("backend/session.php", data, function(msg) {
+        return JSON.parse(msg);
     });
+}
+
+function manualPasswordChanged(action) {
+    if ($("#password-" + action + "-radios-1").prop("checked")) $("#admin-" + action + "-user-password").attr("disabled", true);
+    else $("#admin-" + action + "-user-password").attr("disabled", false);
 }

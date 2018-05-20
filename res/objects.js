@@ -16,7 +16,6 @@ class Events {
     }
 
     update(temp) {
-        console.log(temp);
         let old = this.get(temp.id);
         old.title = temp.title;
         old.id = temp.id;
@@ -27,6 +26,8 @@ class Events {
         old.tags2 = temp.tags2;
         old.tags3 = temp.tags3;
         old.tags4 = temp.tags4;
+        old.tags5 = temp.tags5;
+        old.sport_type = temp.sport_type;
 
         if (typeof temp.special === "string") {
             if (temp.special === "0") old.special = false;
@@ -101,9 +102,10 @@ class Events {
 
         if (active_filters.search.length) {
             subset.forEach(function(e) {
-                if (parseTextToSearch(e.title).indexOf(parseTextToSearch(active_filters.search)) !== -1) result3.push(e);
+                if (parseTextToSearch(e.title).indexOf(parseTextToSearch(active_filters.search)) !== -1) result4.push(e);
             });
         } else subset.forEach(function(e) {result4.push(e);});
+        
         subset.forEach(function(e) {
             if (result1.indexOf(e) !== -1 && result2.indexOf(e) !== -1 && result3.indexOf(e) !== -1 && result4.indexOf(e) !== -1) result.push(e);
         });
@@ -125,22 +127,26 @@ class Event {
     constructor(data) {
         this.title = data.title;
         this.id = data.id;
-        this.content = data.content;
-        this.content = this.content.replace(/\\r\\n/g, "<br>");
-        this.content = this.content.replace(/\\n/g, "<br>");
-        this.content = customReplace(this.content, " ", "&nbsp;");
-        this.content = customReplace(this.content, "\n", "<br>");
+        this.content = '';
+        if (data.content && data.content.length) {
+            this.content = data.content;
+            this.content = this.content.replace(/\\r\\n/g, "<br>");
+            this.content = this.content.replace(/\\n/g, "<br>");
+            this.content = customReplace(this.content, " ", "&nbsp;");
+            this.content = customReplace(this.content, "\n", "<br>");
+        }
         this.tags1 = data.tags1;
         this.tags2 = data.tags2;
         this.tags3 = data.tags3;
         this.tags4 = data.tags4;
+        this.tags5 = data.tags5;
+        this.sport_type = data.sport_type;
         this.deleted = false;
         this.edited = false;
         this.added = false;
         this.added_date = data.added;
         this.edited_date = data.edited;
         this.deleted_date = data.deleted;
-        this.recalculateDates();
 
         if (typeof data.special === "string") {
             if (data.special === "0") this.special = false;
@@ -154,6 +160,7 @@ class Event {
         this.sortingvalue = data.start_time.sortingvalue;
         this.sortingvaluedate = data.start_time.sortingvaluedate;
         this.start_time = data.start_time;
+        this.recalculateDates();
     }
 
     exportToPost(exporting_new) {
@@ -204,6 +211,11 @@ class Event {
         if (this.added_date) this.added = parseInt(this.added_date.split("-")[0]) === d.getFullYear() && parseInt(this.added_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.added_date.split(" ")[0].split("-")[2]) === d.getDate();
         if (this.edited_date) this.edited = parseInt(this.edited_date.split("-")[0]) === d.getFullYear() && parseInt(this.edited_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.edited_date.split(" ")[0].split("-")[2]) === d.getDate();
         if (this.deleted_date) this.deleted = parseInt(this.deleted_date.split("-")[0]) === d.getFullYear() && parseInt(this.deleted_date.split("-")[1]) === d.getMonth() + 1 && parseInt(this.deleted_date.split(" ")[0].split("-")[2]) === d.getDate();
+        if (d.getFullYear() !== this.start_time.year || d.getMonth() + 1 !== this.start_time.month || d.getDate() !== this.start_time.day) {
+            if (this.added_date) this.added = false;
+            if (this.edited_date) this.edited = false;
+            if (this.deleted_date) this.deleted = false;
+        }
     }
 
     htmlTodayEvent() {

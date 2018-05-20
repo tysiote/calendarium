@@ -1,7 +1,3 @@
-function drawMain() {
-
-}
-
 function mainDateChanged(e) {
     if (e && e.length) {
         last_date = e;
@@ -21,8 +17,7 @@ function buildOtherNavigation(rows) {
         '<button type="button" class="btn btn-lg btn-sidebar" onclick="openViews();">Zobrazenie</button>' +
         '<button type="button" class="btn btn-lg btn-sidebar" id="export-button-default" onclick="exportPressed(this);">Export</button>' +
         '<button type="button" class="btn btn-lg btn-sidebar" id="export-button-active" onclick="exportPressed(this);">Zrušiť export</button>' +
-        '<button type="button" class="btn btn-sidebar btn-sidebar-small" onclick="exportMainPressed(true);">Exportovať s popismi</button>' +
-        '<button type="button" class="btn btn-sidebar btn-sidebar-small" onclick="exportMainPressed(false);">Exportovať len titulky</button>' +
+        '<button type="button" class="btn btn-sidebar btn-sidebar-small" onclick="exportMainPressed();">Exportovať vybrané</button>' +
         // '<button type="button" class="btn btn-sidebar btn-sidebar-small" id="export-button-raw" onclick="exportRaw();">Technický export</button>' +
         '';
     nav_obj.html(result);
@@ -64,7 +59,10 @@ function loadSelectedDates(d, m, y, wd, parent, bulk) {
     buildOtherNavigation(shown_events);
     let i = 0;
     if (!bulk) {
-        result = '<h3 class="daily-event-title">Udalosti z dňa ' + translateWeekDay(parseWeekDay(wd)) + ', ' + d + '.' + m + '.' + y + '</h3>';
+        result = '<h3 class="daily-event-title">' +
+            '<span id="daily-header">Udalosti z dňa ' + translateWeekDay(parseWeekDay(wd)) + ', ' + d + '.' + m + '.' + y + '</span>' +
+            '<span><button type="button" id="adding-btn" class="btn btn-primary" onclick="addEvent()">Pridať novú udalosť</button></span>' +
+            '</h3>';
         result += select_all;
         if (shown_events && shown_events.length) {
             shown_events.forEach(function(e) {
@@ -85,7 +83,7 @@ function loadSelectedDates(d, m, y, wd, parent, bulk) {
         }
         parent.html(result);
     }
-
+    if (LEVEL !== 3) $("#adding-btn").hide();
 }
 
 function populateOneEvent(e, day, odd) {
@@ -101,21 +99,29 @@ function populateOneEvent(e, day, odd) {
     }
     let result = '';
     let html_date = '';
+    let event_controls = '';
     if (day) html_date = e.htmlStartDate() + " ";
     let title_class = "event-title";
+    if (LEVEL === 3) {
+        event_controls = '' +
+            '<button type="button" class="btn fa-button" id="' + e.id + '" onclick="editEvent(this);"><i class="fa fa-pencil"></i></button> ' +
+            '<button type="button" class="btn fa-button" id="' + e.id + '" onclick="deleteEvent(this);"><i class="fa fa-trash"></i></button> ' +
+            '';
+    }
     result += '' +
             '<div class="row custom-row ' + odd_class + '" id="cal-row-' + e.id + '">' +
                 '<div class="col-lg-9 col-md-9 col-sm-9 custom-col">' +
                     checkbox_exporting +
                     '<div class="' + title_class + '">' +
-                        '<button data-toggle="collapse" data-target="#cal-row-div-' + e.id + '" class="event-btn">' +
+                        event_controls +
+                        '<button data-toggle="collapse" onclick="resizeMain();" data-target="#cal-row-div-' + e.id + '" class="event-btn event-btn-admin">' +
                             html_date + '[' + e.htmlStartTime() + '] ' + e.htmlTodayEvent() + e.title + '' +
                         '</button>' +
                     '</div>' +
                 '</div>' +
                 '<div class="col-lg-3 col-md-3 col-sm-3 custom-col">' + e.htmlTags2() + '</div>' +
             '</div>' +
-        '<div id="cal-row-div-' + e.id + '" class="collapse"><div class="event-content">' + e.content + '</div></div>';
+        '<div id="cal-row-div-' + e.id + '" class="collapse"><div class="event-content">' + customReplace(e.content, "&nbsp;", " ") + '</div></div>';
     return result;
 }
 
@@ -130,35 +136,6 @@ function oneDate(i) {
             '</span>' +
         '</div>';
     return result;
-}
-
-function moreDates(inc) {
-    let $controls = $("#dates-controls");
-    let result = '';
-    let old_values = [];
-    if (inc > 0) {
-        dates_active++;
-        $controls.html('' +
-            '<button type="button" class="btn btn-primary btn-date-option" onclick="moreDates(1);">Pridajte deň</button>' +
-            '<button type="button" class="btn btn-default btn-date-option" onclick="moreDates(-1);">Odoberte deň</button>'
-        );
-    } else {
-        dates_active += inc;
-        if (dates_active === 0) dates_active = 1;
-        if (dates_active === 1) {
-            $controls.html('<button type="button" class="btn btn-primary" onclick="moreDates(1);">Pridajte deň</button>');
-        }
-    }
-    for (let i = 1; i < dates_active; i++) {
-        result += oneDate(i);
-        old_values[i] = $("#input-date-" + (i + 1)).val();
-    }
-    console.log(old_values);
-    $("#more-dates").html(result);
-    for (let i = 1; i < dates_active; i++) {
-        $(function () {$('#datetimepicker' + (i + 1)).datetimepicker({locale: 'sk', format: 'LLLL'});});
-        if (old_values[i]) $("#input-date-" + (i + 1)).val(old_values[i]);
-    }
 }
 
 function addNewEventModalShow() {

@@ -28,7 +28,6 @@ function addNewEvent(data, bulk) {
         let temp = new Event(data);
         events.add(temp);
         sendEvent(parsePostData(temp.exportToPost(true))).then(function(res) {
-            console.log(res.status, res.id);
             if (!res.status) alert("Chyba na strane servera");
             else {
                 temp.id = res.id;
@@ -98,6 +97,7 @@ function translateTag(tag) {
     if (tag === "anniversary") return "Výročie";
     if (tag === "health") return "Zdravie";
     if (tag === "school") return "Školstvo";
+    if (tag === "abroad") return "Zahraničie";
 
     if (tag === "press") return "Tl. beseda";
     if (tag === "briefing") return "Brífing";
@@ -110,6 +110,22 @@ function translateTag(tag) {
 
     if (tag === "public") return "Verejné";
     if (tag === "special") return "Špeciálna udalosť";
+
+    if (tag === "default_sport") return "Všeobecný";
+    if (tag === "football") return "Futbal";
+    if (tag === "hockey") return "Hokej";
+    if (tag === "tennis") return "Tenis";
+    if (tag === "athletics") return "Atletika";
+    if (tag === "ski") return "Lyžovanie";
+    if (tag === "motor") return "Motorizmus";
+    if (tag === "sport_press") return "Tlačová beseda";
+    if (tag === "sport_conference") return "Konferencia";
+    if (tag === "sport_competition") return "Súťaž";
+    if (tag === "sport_league") return "Liga";
+    if (tag === "sport_match") return "Zápas";
+    if (tag === "sport_tournament") return "Turnaj";
+    if (tag === "sport_championship") return "Majstrovstvá";
+    if (tag === "sport_olympics") return "Olympiáda";
 
     return '';
 }
@@ -131,6 +147,7 @@ function addEventClicked(edit) {
         anniversary: $("#input-checkbox-anniversary" + edit).is(":checked"),
         health: $("#input-checkbox-health" + edit).is(":checked"),
         school: $("#input-checkbox-school" + edit).is(":checked"),
+        abroad: $("#input-checkbox-abroad" + edit).is(":checked"),
     };
     let tags2 = {
         text: $("#input-checkbox-tag-text" + edit).is(":checked"),
@@ -188,7 +205,6 @@ function addEventClicked(edit) {
         temp.start_time = parseStartTimeFromDate(date);
         if (edit && edit.length) editExistingEvent(temp);
         else {
-            console.log(dates_active);
             if (dates_active > 1) {
                 let temps = [];
                 temp.start_time = parseStartTimeFromDate($("#input-date").val());
@@ -230,4 +246,16 @@ function parseStartTimeFromDate(date) {
 function toPublicLink() {
     let loc = location.href.toString();
     window.open(loc.substring(0, loc.indexOf("set.html")), '_blank');
+}
+
+function toLogin() {
+    let loc = location.href.toString();
+    window.location.replace(loc.substring(0, loc.indexOf("index.html")) + "/login.html");
+}
+
+function joinTags(input) {
+    let result = '';
+    for (let key in input) if (input[key]) result += key + "|";
+    if (!result.length) return '';
+    return result.substring(0, result.length - 1);
 }

@@ -175,7 +175,8 @@ body {
 }
 
 .jumbo-info {
-    margin-left: 25px;
+    margin-left: 50px;
+    margin-right: 50px;
     font-size: 16px !important;
     display: inline;
     font-style: italic;
@@ -399,4 +400,17 @@ body {
 
 .stripped-custom-row-0 {
     background-color: #fff;
+}
+
+#btn-export {
+    display: none;
+    float: right;
+}
+
+.modal-export-content {
+    max-width: 500px;
+}
+
+#adding-btn {
+    float: right;
 }

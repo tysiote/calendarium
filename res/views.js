@@ -41,7 +41,6 @@ function radioClicked() {
 function viewChanged(mode, params) {
     viewing_mode = mode;
     viewing_params = params;
-    console.log(params);
     if (mode === "day") invokeCalendarClick();
     else {
         $("#main-datepicker").hide();

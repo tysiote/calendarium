@@ -35,8 +35,8 @@ if ($_SESSION && array_key_exists("logged", $_SESSION) && array_key_exists("leve
                 if ($_POST["action"] == "add_event") $result = addEvent($_POST["data"]);
                 if ($_POST["action"] == "add_event_bulk") $result = addEventBulk($_POST["data"]);
                 if ($_POST["action"] == "edit_event") $result = editEvent($_POST["data"]);
-                if ($_POST["action"] == "delete_event_soft") $result = deleteDataSoft($_POST["data"]);
-                if ($_POST["action"] == "delete_event_hard") $result = deleteDataHard($_POST["data"]);
+                if ($_POST["action"] == "delete_event_soft") $result = deleteDataSoft($_POST["data"]["id"]);
+                if ($_POST["action"] == "delete_event_hard") $result = deleteDataHard($_POST["data"]["id"]);
 
                 // USERS
                 if ($_POST["action"] == "add_user") $result = addUser($_POST["data"]);

@@ -1,15 +1,27 @@
 function parseResponse(res) {
-    let result = JSON.parse(res);
-    result.forEach(function(e) {
+    res.forEach(function(e) {
         e.start_time = parseDate(e.start_time, "decode");
         e.id = parseInt(e.id);
     });
-    return result;
+    return res;
 }
 
 function parseDate(input, type) {
     if (type === "encode") {
-        return input.year + "-" + input.month + "-" + input.day + " " + input.hour + "-" + input.minute;
+        let month = input.month.toString();
+        let day = input.day.toString();
+        let hour = input.hour.toString();
+        let minute = input.minute.toString();
+        let result = input.year + "-";
+        if (month.length === 1) result += "0";
+        result += month + "-";
+        if (day.length === 1) result += "0";
+        result += day + " ";
+        if (hour.length === 1) result += "0";
+        result += hour + "-";
+        if (minute.length === 1) result += "0";
+        result += minute;
+        return result;
     }
     if (type === "decode") {
         let result = {};
@@ -32,14 +44,12 @@ function parseDate(input, type) {
         if (result.day < 10) result.sortingvaluedate += "0" + result.day.toString();
         else result.sortingvaluedate += result.day.toString();
         result.sortingvaluedate += result.sortingvalue;
-
         return result;
     }
     return null;
 }
 
 function parsePostData(obj) {
-    console.log(obj);
     let result = "";
     for (let key in obj) result += key + "=" + obj[key].toString() + "&";
     return result.substring(0, result.length - 1);

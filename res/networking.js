@@ -1,5 +1,7 @@
 function getAllEvents() {
-    return $.ajax({url: "res/connect.php", success: function() {return true;}});
+    return $.ajax({url: "res/connect.php", success: function() {return true;}, error: function(jqXHR, exception) {
+            console.log(exception, jqXHR);
+        }});
 }
 
 function sendEvent(data) {
@@ -13,22 +15,23 @@ function sendEvent(data) {
         }).then(function(res) {return res.json();})
 }
 
-function getAllEvents2() {
-    return $.ajax({url: "res/core.php", success: function() {return true;}});
-}
-
-function checkConnect() {
+function sendPostRequest(data) {
     return $.post({
-        url: "res/core.php",
-        data: {"check_connect": true},
-        dataType: "json",
-        type: "POST",
+        url: "backend/session.php",
+        data: data,
         success: function(msg) {
-            let res = {};
-            $.each(msg, function(i, v) {
-                res[i] = v;
-            });
-            return res;
-        }
-    });
+            return JSON.parse(msg);
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status === 502) {
+                loading_try++;
+                if (loading_try === 15) {
+                    let bar = $("#loading-page");
+                    bar.html("Porucha na strane servera, skúste znova načítať stránku alebo počkajte prosím");
+                }
+                return sendPostRequest(data).then(function(res) {
+                    successfulStart(res);
+                });
+            }
+        }});
 }

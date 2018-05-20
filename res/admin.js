@@ -22,12 +22,10 @@ function adminStart() {
     });
     checkConnect().then(function(res) {
         res = JSON.parse(res);
-        console.log(res);
         if (res.status.code === 11) {
             if (res.level === 4) {
                 fetchUsers().then(function(res) {
                     res = JSON.parse(res);
-                    console.log(res);
                     adminStartMain(res.data);
                 });
             } else {
@@ -302,7 +300,6 @@ function addUser() {
     btn.html("Pracujem");
     sendPostRequest(data).then(function(res) {
         res = JSON.parse(res);
-        console.log(res);
         if (res.status.code !== 11) result = "Používateľa sa nepodarilo pridať";
         else {
             result = 'Používateľ bol pridaný.<br>Nové heslo je <br><span class="new-password">' + password[0] + '</span>';
@@ -389,7 +386,6 @@ function addToUsers() {
 }
 
 function changeUserRefresh(user_id, usertype) {
-    console.log(user_id, usertype);
     let temp = [];
     for (let i = 0; i < users.length; i++) {
         if (users[i].nickname !== user_id) temp.push(users[i]);
@@ -403,7 +399,6 @@ function changeUserRefresh(user_id, usertype) {
 }
 
 function sendPostRequest(data) {
-    console.log(data);
     return $.post("backend/session.php", data, function(msg) {
         return JSON.parse(msg);
     });

@@ -19,7 +19,6 @@ function loginStart() {
     });
     disconnect().then(function(res) {
         res = JSON.parse(res);
-        console.log(res);
         spinner.hide();
         main.show();
     });
@@ -61,7 +60,6 @@ function loginButton() {
     btn.html("Prihlasujem<i class='fa fa-refresh fa-spin' style='font-size:24px'></i>");
     connect({nickname: nickname, password: CryptoJS.MD5(password).words[0]}).then(function(res) {
         res = JSON.parse(res);
-        console.log(res);
         if (res.status.code === 10) {
             proceed(res.data.level);
         } else {

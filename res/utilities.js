@@ -87,6 +87,7 @@ function translateTag(tag) {
     if (tag === "text") return "Text";
     if (tag === "audio") return "Zvuk";
     if (tag === "photo") return "Foto";
+    if (tag === "live") return "Live";
 
     if (tag === "politics") return "Politika";
     if (tag === "justice") return "Justícia";

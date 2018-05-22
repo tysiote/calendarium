@@ -4,6 +4,7 @@ let resetting = '';
 let removing = '';
 let changing = '';
 let sorting = 'nickname-0';
+let expiring = null;
 
 function prepareUsers(data) {
     data.forEach(function(u) {
@@ -39,6 +40,7 @@ function adminStart() {
 
 function adminStartMain(data) {
     prepareUsers(data);
+    calculateExpiry();
     $("#search-input").on("change paste keyup",function() {refreshFilter();});
     $("#admin-users").html(fillUsers());
     pre_check_sort();
@@ -50,7 +52,7 @@ function sortButton(el) {
     let recent = $(el).prop("id").split("-")[1];
     let $el = $("#sort-" + recent + "-fa");
     let last = sorting.split("-")[1];
-    ["nickname", "name", "rights"].forEach(function(id) {
+    ["nickname", "name", "rights", "expiry"].forEach(function(id) {
         let $temp_el = $("#sort-" + id + "-fa");
         $temp_el.removeClass();
         $temp_el.addClass("fa");
@@ -79,10 +81,31 @@ function sort() {
     if (key === "rights") key = "usertype";
     if (key === "nickname") key = "svk_nickname";
     if (key === "name") key = "svk_name";
-    filtered_users.sort(function(a, b) {
-        if (dir === "1") return a[key] < b[key];
-        return b[key] < a[key];
+    if (key === "expiry") key = "expiry_processed";
+    let sortable = [];
+    filtered_users.forEach(function(u) {
+        if (key === "expiry_processed") {
+            let k = u[key].split(" ")[0];
+            if (!parseInt(k)) {
+                if (u[key].indexOf("darkred") !== -1) k = "-1";
+                else k = "9999999999";
+            }
+            sortable.push([u, parseInt(k)]);
+        } else sortable.push([u, u[key]]);
     });
+    if (key === "usertype" || key === "expiry_processed") {
+        sortable.sort(function(a, b) {
+            if (dir === "1") return a[1] - b[1];
+            else return b[1] - a[1];
+        });
+    } else {
+        sortable.sort(function(a, b) {
+            if (dir === "1") return (a[1] < b[1]) ? -1 : (a[1] > b[1]) ? 1 : 0;
+            else return (b[1] < a[1]) ? -1 : (b[1] > a[1]) ? 1 : 0;
+        });
+    }
+    filtered_users = [];
+    sortable.forEach(function(u) {filtered_users.push(u[0]);});
     $("#admin-users").html(fillUsers());
     pre_check_sort();
 }
@@ -91,6 +114,7 @@ function refreshFilter() {
     let $el = $("#search-input");
     let search = svkToEng($el.val());
     filtered_users = [];
+    calculateExpiry();
     if (search.length) {
         users.forEach(function(u) {
             if (u.svk_name.indexOf(search) !== -1) filtered_users.push(u);
@@ -108,6 +132,12 @@ function customReplace(s1, s2, s3) {
         s1 = s1.replace(s2, s3);
     }
     return s1;
+}
+
+function calculateExpiry() {
+    users.forEach(function(u) {
+        u.expiry_processed = parseExpiry(u.expiry, 2);
+    });
 }
 
 function svkToEng(input) {
@@ -150,6 +180,7 @@ function fillUsers() {
                     '<th>Používateľ<button class="sort-btn" id="sort-nickname" onclick="sortButton(this);"><span id="sort-nickname-fa" class="fa fa-sort-down"></span></button></th>' +
                     '<th>Meno<button class="sort-btn" id="sort-name" onclick="sortButton(this);"><span id="sort-name-fa" class="fa fa-sort-down"></span></button></th>' +
                     '<th>Práva<button class="sort-btn" id="sort-rights" onclick="sortButton(this);"><span id="sort-rights-fa" class="fa fa-sort-down"></span></button></th>' +
+                    '<th>Expirácia<button class="sort-btn" id="sort-expiry" onclick="sortButton(this);"><span id="sort-expiry-fa" class="fa fa-sort-down"></span></button></th>' +
                     '<th>Operácie</th>' +
                 '</tr>' +
             '</thead>' +
@@ -160,7 +191,7 @@ function fillUsers() {
 }
 
 function pre_check_sort() {
-    ["nickname", "name", "rights"].forEach(function(id) {
+    ["nickname", "name", "rights", "expiry"].forEach(function(id) {
         let $temp_el = $("#sort-" + id + "-fa");
         $temp_el.removeClass();
         $temp_el.addClass("fa");
@@ -181,6 +212,7 @@ function fillOneUser(u) {
             '<td>' + u.nickname + '</td>' +
             '<td>' + u.name + '</td>' +
             '<td>' + translateUsertype(u.usertype) + '</td>' +
+            '<td>' + createExpiry(u) + '</td>' +
             '<td>' +
                 '<button type="button" class="btn btn-default btn-manage" onclick="resetPressed(\'' + u.nickname + '\');">Zmena hesla</button>' +
                 '<button type="button" class="btn btn-info btn-manage" onclick="userTypePressed(\'' + u.nickname + '\');">Zmena práv</button>' +
@@ -188,6 +220,103 @@ function fillOneUser(u) {
             '</td>' +
         '</tr>';
     return result;
+}
+
+function createExpiry(u) {
+    let result = '';
+    result += '<button type="button" class="btn btn-expiry" onclick="expiryClicked(\'' + u.nickname + '\');">' + u.expiry_processed + '</button>';
+    return result;
+}
+
+function findUser(nickname) {
+    for (let i = 0; i < users.length; i++) if (users[i].nickname === nickname) return users[i];
+    return null;
+}
+
+function parseMonth(input) {
+    let months = ["január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október", "november", "december"];
+    if (typeof input === "string") {
+        if (months.indexOf(input.toLowerCase()) !== -1) return months.indexOf(input.toLowerCase()) + 1;
+    }
+    if (typeof input === "number" && input >= 0 && input < 12) return months[input].substr(0, 1).toUpperCase() + months[input].substr(1, months[input].length).toLowerCase();
+    return null;
+}
+
+function checkDate(input) {
+    let day = null;
+    let month = null;
+    let year = null;
+    if (input && input.length) {
+        let parts = input.split(" ");
+        if (parts.length === 3) {
+            if (parts[0].indexOf(".") !== -1) {
+                if (parts[0].length === 2 && parseInt(parts[0].substring(0, 1))) day = parseInt(parts[0].substring(0, 1));
+                if (parts[0].length === 3 && parseInt(parts[0].substring(0, 2))) day = parseInt(parts[0].substring(0, 2));
+            }
+            month = parseMonth(parts[1]);
+            year = parseInt(parts[2]);
+        }
+    }
+    if (day && month && year) return {day: day, month: month, year: year};
+    return false;
+}
+
+function dateChanged() {
+    let result = 'Chybný dátum';
+    let date = checkDate($("#input-date").val());
+    if (date) result = parseExpiry(date, 1);
+    $("#checked-date").html(result);
+}
+
+function parseExpiry(exp, mode) {
+    if (mode === 1) { // object
+        return exp.day + ". " + parseMonth(exp.month - 1) + " " + exp.year;
+    }
+    if (mode === 2) { // date_string
+        if (exp && exp.length) {
+            let d = new Date(exp);
+            let e = new Date();
+            let compare = (d - e) /1000/60/60/24; // RETURNS DAYS
+            if (compare < 0) return '<span style="color: darkred">Účet expiroval</span>';
+            else compare = parseInt(compare.toString()) + " dní, ";
+            return compare + d.getDate() + ". " + parseMonth(d.getMonth()) + " " + d.getFullYear();
+        } else return '<span style="color: darkblue">Neobmedzené</span>';
+    }
+    return exp;
+}
+
+function expiryClicked(nickname) {
+    expiring = findUser(nickname);
+    let result = 'Zmena expirácie pre ' + expiring.name;
+    $("#admin-change-expiry-title").html(result);
+    result = '<p>Pôvodné nastavenie: <br><b>' + expiring.expiry_processed + "</b><br><br>";
+    result += 'Nové nastavenie: <br><b><span id="checked-date"></span></b></p>';
+    $("#admin-change-expiry-body").html(result);
+    dateChanged();
+    $("#admin-change-expiry").modal("show");
+}
+
+function expiryChange() {
+    let temp = checkDate($("#input-date").val());
+    if (temp.day < 10) temp.day = "0" + temp.day;
+    if (temp.month < 10) temp.month = "0" + temp.month;
+    let expiry = temp.year + "-" + temp.month + "-" + temp.day;
+    let data = {action: "edit_user", data: {expiry: expiry, nickname: expiring.nickname}};
+    let btn = $("#btn-modal-expiry");
+    btn.prop("disabled", true);
+    btn.html("Pracujem");
+    sendPostRequest(data).then(function(res) {
+        res = JSON.parse(res);
+        if (res.status.code === 11) {
+            btn.prop("disabled", false);
+            btn.html("Upraviť");
+            expiring.expiry = expiry;
+            calculateExpiry();
+            refreshFilter();
+            expiring = null;
+        }
+        $("#admin-change-expiry").modal("hide");
+    });
 }
 
 function translateUsertype(i) {

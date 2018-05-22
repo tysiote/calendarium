@@ -49,6 +49,10 @@ body {
     color: white;
     background-color: #014f95;
 }
+.tag-live {
+    color: white;
+    background-color: darkgreen;
+}
 
 .tag-politics {
     color: #222222;

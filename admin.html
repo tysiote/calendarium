@@ -22,6 +22,7 @@
     <script src="bootstrap/js/cryptojs/md5-min.js"></script>
 
     <script src="res/admin.js"></script>
+    <script src="res/sk.js"></script>
 
     <link href="res/admin.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -80,6 +81,33 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
                     <button type="button" class="btn btn-danger" id="btn-modal-remove" onclick="removeUser();">Zmazať</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="admin-change-expiry" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="admin-change-expiry-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class='input-group date' id='datetimepicker'>
+                        <input type='text' class="form-control" id="input-date" placeholder="Použite ikonu napravo" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <script type="text/javascript">
+                            $(function () {$('#datetimepicker').datetimepicker({locale: 'sk', format: 'LL'});});
+                            $("#datetimepicker").on("dp.hide", function() {dateChanged();});
+                        </script>
+                    </div>
+                    <div id="admin-change-expiry-body"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
+                    <button type="button" class="btn btn-primary" id="btn-modal-expiry" onclick="expiryChange();">Upraviť</button>
                 </div>
             </div>
         </div>

@@ -1,11 +1,24 @@
 <?php
 error_reporting(1);
 function connectDatabase() {
-    $host = "46.229.230.119";
-    $user = "rs017100";
-    $password = "mvabived";
-    $database = "rs017101db";
-    $con = mysqli_connect($host, $user, $password, $database);
+    $file = fopen("config.txt", "r") or die("Unable to open file!");
+    $text = fread($file,filesize("config.txt"));
+    fclose($file);
+    $data = explode("[", $text);
+    $host = '';
+    $user = '';
+    $password = '';
+    $db = '';
+    for ($i = 1; $i < sizeof($data); $i++) {
+        $temp = explode("]", $data[$i]);
+        $temp[1] = str_replace(chr(13), "", $temp[1]);
+        $temp[1] = str_replace(chr(10), "", $temp[1]);
+        if ($temp[0] == "HOST") $host = $temp[1];
+        if ($temp[0] == "USER") $user = $temp[1];
+        if ($temp[0] == "PASSWORD") $password = $temp[1];
+        if ($temp[0] == "DB") $db = $temp[1];
+    }
+    $con = mysqli_connect($host, $user, $password, $db);
     return $con;
 }
 

@@ -1,5 +1,0 @@
-#table striped
-content delete
-filtre na mesiac, tyzden
-logo
-zrusernie do buducnosti

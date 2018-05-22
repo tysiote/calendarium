@@ -43,3 +43,9 @@ body {
 .search-user-input {
     height: 33px;
 }
+
+.btn-expiry {
+    height: 32px;
+    background-color: inherit;
+    border: 0;
+}

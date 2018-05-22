@@ -5,7 +5,9 @@ let active_filters = {
     search: "",
     classes: [],
     areas: [],
-    forms: []
+    forms: [],
+    tags: [],
+    sports: []
 };
 let viewing_mode = "day";
 let viewing_params = "";
@@ -20,6 +22,7 @@ let area_selected = false;
 let adding_data = null;
 let loading_try = 0;
 let dates_active = 1;
+let export_max = 70;
 
 function startPage() {
     let $main = $("#main-jumbotron");

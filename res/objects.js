@@ -76,6 +76,8 @@ class Events {
         let result2 = [];
         let result3 = [];
         let result4 = [];
+        let result5 = [];
+        let result6 = [];
         if (active_filters.classes.length) {
             subset.forEach(function(e) {
                 let passed = false;
@@ -100,14 +102,37 @@ class Events {
             });
         } else subset.forEach(function(e) {result3.push(e);});
 
-        if (active_filters.search.length) {
+        if (active_filters.tags.length) {
             subset.forEach(function(e) {
-                if (parseTextToSearch(e.title).indexOf(parseTextToSearch(active_filters.search)) !== -1) result4.push(e);
+                let passed = false;
+                active_filters.tags.forEach(function(f) {if (e.tags2.indexOf(f) !== -1) passed = true;});
+                if (passed) result4.push(e);
             });
         } else subset.forEach(function(e) {result4.push(e);});
+
+        if (active_filters.sports.length) {
+            subset.forEach(function(e) {
+                let passed = false;
+                active_filters.sports.forEach(function(f) {if (e.sport_type.indexOf(f) !== -1) passed = true;});
+                if (passed) result5.push(e);
+            });
+        } else subset.forEach(function(e) {result5.push(e);});
+
+        if (active_filters.search.length) {
+            subset.forEach(function(e) {
+                if (parseTextToSearch(e.title).indexOf(parseTextToSearch(active_filters.search)) !== -1) result6.push(e);
+            });
+        } else subset.forEach(function(e) {result6.push(e);});
         
         subset.forEach(function(e) {
-            if (result1.indexOf(e) !== -1 && result2.indexOf(e) !== -1 && result3.indexOf(e) !== -1 && result4.indexOf(e) !== -1) result.push(e);
+            if (
+                result1.indexOf(e) !== -1 &&
+                result2.indexOf(e) !== -1 &&
+                result3.indexOf(e) !== -1 &&
+                result4.indexOf(e) !== -1 &&
+                result5.indexOf(e) !== -1 &&
+                result6.indexOf(e) !== -1
+            ) result.push(e);
         });
         return result;
     }

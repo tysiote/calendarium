@@ -70,7 +70,7 @@ function switchExports() {
 function parseToExport(val) {
     let result = '';
     let word = '';
-    let max = 70;
+    let max = export_max;
     let cur = 0;
     let i = 0;
     while (i < val.length) {
@@ -107,7 +107,7 @@ function exportTechnical() {
     text = customReplace(text, ":", ".");
     text = customReplace(text, " ", "&nbsp;");
     let winPrint = window.open('', '', 'left=0,top=0,width=1024,height=768,toolbar=0,scrollbars=1,status=0');
-    winPrint.document.write('<title>Print  Report</title><div style="font-family: \'Courier New\'">' + text + '</div>');
+    winPrint.document.write('<title>Print  Report</title><div style="font-size: 10px; font-family: \'Courier New\'">' + text + '</div>');
     winPrint.document.close();
 }
 
@@ -146,8 +146,8 @@ function replaceTR(tr) {
             if (tds === 1 && temp.length === 4) temp = "0" + temp;
             if (tds === 1) result += customReplace(temp, ":", ".") + "&nbsp;".repeat(5);
             if (tds === 2) result += parseToExport(temp) + '<br>';
-            if (tds === 3) result += parseToExport(temp) + "&nbsp;".repeat(5);
-            if (tds === 4) result += temp;
+            if (tds === 3) result += parseToExport(temp) + "<br>";
+            if (tds === 4) result += "&nbsp;".repeat(export_max - temp.length - 1) + temp;
             temp = '';
         }
         if (writing) temp += tr[i];

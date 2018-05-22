@@ -73,6 +73,7 @@ function grabCheckboxes(edit) {
     let err = '';
     let title = $("#input-title" + edit).val();
     let content = $("#input-content" + edit).val();
+    while(content.length && content.substring(content.length - 1, content.length) === "\n") content = content.substring(0, content.length - 1);
     let date = $("#input-date" + edit).val();
     let tags1 = {
         politics: $("#input-checkbox-politics" + edit).is(":checked"),
@@ -91,6 +92,7 @@ function grabCheckboxes(edit) {
         video: $("#input-checkbox-tag-video" + edit).is(":checked"),
         audio: $("#input-checkbox-tag-audio" + edit).is(":checked"),
         photo: $("#input-checkbox-tag-photo" + edit).is(":checked"),
+        live: $("#input-checkbox-tag-live" + edit).is(":checked"),
     };
     let tags3 = {
         ba: $("#input-checkbox-area-ba" + edit).is(":checked"),

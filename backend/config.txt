@@ -1,0 +1,12 @@
+[HOST]
+46.229.230.119
+
+[USER]
+rs017100
+
+
+[PASSWORD]
+mvabived
+
+[DB]
+rs017101db

@@ -409,6 +409,11 @@ body {
 #btn-export {
     display: none;
     float: right;
+    margin-right: 5px;
+}
+
+#btn-export-print {
+    float: right;
 }
 
 .modal-export-content {
@@ -417,4 +422,10 @@ body {
 
 #adding-btn {
     float: right;
+}
+
+.custom-textarea {
+    font-family: "Courier New";
+    font-size: 1em;
+    width: 41em;
 }

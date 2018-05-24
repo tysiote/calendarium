@@ -61,7 +61,7 @@ function viewChanged(mode, params) {
         let check_count = false;
         let error = "<p class='jumbo-info'>Pre zadaný dátum neexistujú žiadne dáta</p>";
         if (mode === "month") {
-            $el.html('<h2 class="month-week-title">Prehľad udalostí na mesiac ' + params + '</h2>' + select_all);
+            $el.html('<h2 class="month-week-title" id="month-week-title">Prehľad udalostí na mesiac ' + params + '</h2>' + select_all);
             let y = new Date().getFullYear();
             let months_count = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             if (y % 4 === 0) months_count[1] = 29;
@@ -76,7 +76,7 @@ function viewChanged(mode, params) {
             }
             validateExportOptionsButtons();
         } else {
-            $el.html('<h2 class="month-week-title">Prehľad udalostí na ' + params.toLowerCase() + '</h2>' + select_all);
+            $el.html('<h2 class="month-week-title" id="month-week-title">Prehľad udalostí na ' + params.toLowerCase() + '</h2>' + select_all);
             let d1 = parseInt(params.split(" ")[1].split(".")[0]);
             let d2 = parseInt(params.split(" ")[3].split(".")[0]);
             let m1 = parseInt(params.split(" ")[1].split(".")[1]);

@@ -241,6 +241,7 @@ class Event {
             if (this.edited_date) this.edited = false;
             if (this.deleted_date) this.deleted = false;
         }
+        if (this.edited_date) this.edited = false; // PERMANENTLY DISABLED
     }
 
     htmlTodayEvent() {

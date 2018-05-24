@@ -251,7 +251,8 @@ function toPublicLink() {
 
 function toLogin() {
     let loc = location.href.toString();
-    window.location.replace(loc.substring(0, loc.indexOf("index.html")) + "/login.html");
+    if (loc.indexOf("index.html") !== -1) window.location.replace(loc.substring(0, loc.indexOf("index.html")) + "/login.html");
+    else location.href = loc + "/login.html";
 }
 
 function joinTags(input) {

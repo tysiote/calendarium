@@ -8,12 +8,22 @@ function deleteEvent(item) {
 }
 
 function deleteEvent2() {
-    // events.remove(deleting_event);
+    let d = new Date();
     let temp = {action: "delete_event_soft", data: {id: deleting_event.id}};
+    let soft = d.getFullYear() === deleting_event.start_time.year && d.getDate() === deleting_event.start_time.day && d.getMonth() + 1 === deleting_event.start_time.month;
+    console.log(soft, d.getFullYear() === deleting_event.start_time.year, d.getDate() === deleting_event.start_time.day, d.getMonth() + 1 === deleting_event.start_time.month);
+    console.log(d.getFullYear(), d.getDate(), d.getMonth() + 1);
+    console.log(deleting_event);
+    if (!soft) {
+        events.remove(deleting_event);
+        temp.action = "delete_event_hard";
+    }
     sendPostRequest(temp).then(function(res) {
         res = JSON.parse(res);
-        deleting_event.deleted_date = res.data.deleted;
-        deleting_event.recalculateDates();
+        if (soft) {
+            deleting_event.deleted_date = res.data.deleted;
+            deleting_event.recalculateDates();
+        }
         deleting_event = null;
         invokeCalendarClick();
         viewChanged(viewing_mode, viewing_params);

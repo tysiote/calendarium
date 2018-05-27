@@ -428,4 +428,9 @@ body {
     font-family: "Courier New";
     font-size: 1em;
     width: 41em;
+    resize: vertical;
+}
+
+.custom-title {
+    font-family: "Courier New";
 }

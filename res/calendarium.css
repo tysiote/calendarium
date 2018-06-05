@@ -153,7 +153,7 @@ body {
 .btn-sidebar {
     width: 250px;
     text-align: left;
-    background-color: inherit;
+    background-color: #014f95;
     color: white;
     margin-top: 20px;
 }
@@ -200,7 +200,7 @@ body {
     font-weight: bold;
     display: inline-block;
     float: left;
-    height: 25px;
+    //height: 25px;
 }
 
 .daily-event-title {

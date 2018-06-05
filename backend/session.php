@@ -3,6 +3,17 @@ include("connection.php");
 include("events.php");
 include("users.php");
 
+function utf8ize($d) {
+    if (is_array($d)) {
+        foreach ($d as $k => $v) {
+            $d[$k] = utf8ize($v);
+        }
+    } else if (is_string ($d)) {
+        return utf8_encode($d);
+    }
+    return $d;
+}
+
 function checkAction($action) {
     $ret = false;
     $actions = [
@@ -68,4 +79,6 @@ if ($_SESSION && array_key_exists("logged", $_SESSION) && array_key_exists("leve
         }
     }
 }
+
+//echo json_encode(utf8ize($result));
 echo json_encode($result);

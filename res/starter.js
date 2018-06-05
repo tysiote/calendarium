@@ -61,6 +61,7 @@ function successfulStart(result) {
         });
         $el.on("dp.change", function(e) {mainDateChanged(e.date._d.toString());});
         invokeCalendarClick();
+        resizeMain();
     }
 }
 

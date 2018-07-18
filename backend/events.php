@@ -24,7 +24,8 @@ function addEvent($data) {
     $tags4 = $data['tags4'];
     $tags5 = $data['tags5'];
     $sport_type = $data['sport_type'];
-    $sql = "INSERT INTO calendarium (title, content, start_time, tags1, tags2, tags3, tags4, tags5, sport_type, added) VALUES ('$title', '$content', '$start_time', '$tags1', '$tags2', '$tags3', '$tags4', '$tags5', '$sport_type', now())";
+    $no_time = $data['no_time'];
+    $sql = "INSERT INTO calendarium (title, content, start_time, tags1, tags2, tags3, tags4, tags5, sport_type, added, no_time) VALUES ('$title', '$content', '$start_time', '$tags1', '$tags2', '$tags3', '$tags4', '$tags5', '$sport_type', now(), $no_time)";
     $con->query($sql);
     $sql = "SELECT * FROM calendarium WHERE id=$con->insert_id";
     $res = $con->query($sql);
@@ -45,7 +46,10 @@ function editEvent($data) {
     $sql = "UPDATE calendarium";
     $sql .= " SET ";
     foreach($data as $key=>$value) {
-        if ($key != "id") $sql .= $key . " = '". $value . "', ";
+        if ($key != "id") {
+            if ($key == "no_time") $sql .= $key . " = ". $value . ", ";
+            else $sql .= $key . " = '". $value . "', ";
+        }
     }
     $sql .= "edited=now() WHERE id = " . $data['id'];
     $con->query($sql);
@@ -55,6 +59,7 @@ function editEvent($data) {
     $row = $con->query($sql)->fetch_assoc();
     $result["data"]["edited"] = $row['edited'];
     $result["data"]["start_time"] = $row['start_time'];
+    $result["data"]["no_time"] = $row['no_time'];
     return $result;
 }
 

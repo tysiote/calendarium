@@ -17,7 +17,7 @@ function utf8ize($d) {
 function checkAction($action) {
     $ret = false;
     $actions = [
-        ["get_events", "logout"],
+        ["get_events", "logout", "ping"],
         ["add_event", "add_event_bulk", "edit_event", "delete_event_soft", "delete_event_hard"],
         ["add_user", "edit_user", "delete_user", "get_users"]
     ];
@@ -25,6 +25,13 @@ function checkAction($action) {
         if (in_array($action, $actions[$i])) $ret = true;
     }
     return $ret;
+}
+
+function ping() {
+    $res = getEvents();
+    $res["ping"] = true;
+//    return array("status" => array("code" => 11, "msg" => translateCode(11)));
+    return $res;
 }
 
 function logout() {
@@ -55,6 +62,7 @@ if ($_SESSION && array_key_exists("logged", $_SESSION) && array_key_exists("leve
                 if ($_POST["action"] == "delete_user") $result = deleteUser($_POST["data"]);
             } else {
                 if ($_POST["action"] == "logout") $result = logout();
+                if ($_POST["action"] == "ping") $result = ping();
 
                 // EVENTS
                 if ($_POST["action"] == "get_events") $result = getEvents();

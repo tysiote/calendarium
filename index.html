@@ -104,6 +104,7 @@
                 <div class="modal-body" id="remove-modal-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" onclick="deleteEvent2();" data-dismiss="modal">Zmazať</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteEvent2(true);" data-dismiss="modal">Zmazať úplne</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Zrušiť</button>
                 </div>
             </div>
@@ -218,15 +219,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker1-edit'>
-                                <input type='text' class="form-control" id="input-date-edit" placeholder="Použite ikonu napravo" />
+                        <div class="form-group" id="edit-time-1-div">
+                            <div class='input-group date' id='datetimepicker1a-edit'>
+                                <input type='text' class="form-control" id="input-date-1-edit" placeholder="Použite ikonu napravo" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
-                                <script type="text/javascript">$(function () {$('#datetimepicker1-edit').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
+                                <script type="text/javascript">$(function () {$('#datetimepicker1a-edit').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
                             </div>
                         </div>
+                        <div class="form-group" id="edit-time-2-div">
+                            <div class='input-group date' id='datetimepicker1b-edit'>
+                                <input type='text' class="form-control" id="input-date-2-edit" placeholder="Použite ikonu napravo" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                <script type="text/javascript">$(function () {$('#datetimepicker1b-edit').datetimepicker({locale: 'sk', format: 'LL'});});</script>
+                            </div>
+                        </div>
+                        <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-edit-no_time" onclick="noTimeClicked(true);"><label for="input-edit-no_time" class="checkbox-inline">Nezadávať čas</label></div>
                         <p class="error-msg" id="input-new-error-edit"></p>
                     </form>
                 </div>
@@ -346,19 +357,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" id="input-date" placeholder="Použite ikonu napravo" />
+                        <!--<div class="form-group" id="add-time-div">-->
+                            <!--<div class='input-group date' id='datetimepicker1'>-->
+                                <!--<input type='text' class="form-control" id="input-date" placeholder="Použite ikonu napravo" />-->
+                                <!--<span class="input-group-addon">-->
+                                    <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                                <!--</span>-->
+                                <!--<script type="text/javascript">$(function () {$('#datetimepicker1').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+
+                        <div class="form-group" id="add-time-1-div">
+                            <div class='input-group date' id='datetimepicker1a'>
+                                <input type='text' class="form-control" id="input-date-1" placeholder="Použite ikonu napravo" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
-                                <script type="text/javascript">$(function () {$('#datetimepicker1').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
+                                <script type="text/javascript">$(function () {$('#datetimepicker1a').datetimepicker({locale: 'sk', format: 'LLLL'});});</script>
                             </div>
                             <div id="more-dates"></div>
                             <div id="dates-controls" class="dates-options">
                                 <button type="button" class="btn btn-primary btn-date-option" onclick="moreDates(1);">Pridať deň</button>
                             </div>
                         </div>
+                        <div class="form-group" id="add-time-2-div">
+                            <div class='input-group date' id='datetimepicker1b'>
+                                <input type='text' class="form-control" id="input-date-2" placeholder="Použite ikonu napravo" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                <script type="text/javascript">$(function () {$('#datetimepicker1b').datetimepicker({locale: 'sk', format: 'LL'});});</script>
+                            </div>
+                        </div>
+
+                        <div class="checkbox checkbox-primary"><input type="checkbox" value="" id="input-add-no_time" onclick="noTimeClicked();"><label for="input-add-no_time" class="checkbox-inline">Nezadávať čas</label></div>
                         <p class="error-msg" id="input-new-error"></p>
                     </form>
                 </div>
@@ -371,7 +404,7 @@
     </div>
     <div id="screen">
         <div id="sidebar" class="sidebar">
-            <img src="assets/logo.png" class="sidebar-logo"/>
+            <a href="http://www.tasr.sk/"><img src="assets/logo.png" class="sidebar-logo"/></a>
             <div id="main-datepicker" style="background-color: white;"></div>
             <div id="other-navigation"></div>
             <button type="button" style="visibility: hidden;" onClick="mainDateChanged()" value="" id="test"></button>
